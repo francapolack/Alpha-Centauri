@@ -12,11 +12,12 @@ JUGADOR_VELOCIDAD=2
 TILE_TAM=32
 FUENTE_DIALOGOS=pygame.font.SysFont("Consolas",300)
 
-#VARIABLES
+#VARIABLES ()
 CONDICION_COMPLETA=False
 RUNNING=True
 GRAVEDAD=1000
 SELECCIONADOS=[]
+ESTADO_ACTUAL=""
 
 #COLORES
 NEGRO=(0,0,0)
@@ -43,7 +44,6 @@ ANCHO_PC,ALTO_PC=pygame.display.get_surface().get_size()
 
 def texto_display(texto,fuente,color,x,y):
     img=fuente.render(texto,True,color)
-    pantalla.blit(img,(x,y))
 
 """"
 class Jugador:
@@ -95,7 +95,7 @@ base=Partes_Rover(textura_base,(ANCHO_PC-200))
 base.descripcion("Texto de la base,bla bla blaa")
 
 class Main:
-    while RUNNING:   
+    while RUNNING: 
         for event in pygame.event.get():
             if event.type==pygame.QUIT:
                 RUNNING=False
@@ -104,11 +104,12 @@ class Main:
                     pygame.quit()
                     sys.exit()
             #CINEMATICA 
-            #SELECCION DE LAS PARTEEESSSS
+            #JUEGO PRINCIALP
             elif event.type==pygame.MOUSEBUTTONDOWN:
                 if base.hitbox.collidepoint(event.pos):
                     click_sonido.play()
-                    texto_display("base.texto",FUENTE_DIALOGOS,BLANCO,220,150)
+                    txt_base=FUENTE_DIALOGOS.render("Basee",True,BLANCO)
+                   
                     if "BASE" in SELECCIONADOS:
                         print("Ya has seleccionado este componente")
                     else:
@@ -117,7 +118,6 @@ class Main:
 
                 elif rueda.hitbox.collidepoint(event.pos):
                     click_sonido.play()
-                    texto_display(rueda.texto,NEGRO)
                     if "RUEDA" in SELECCIONADOS:
                         print("Ya has seleccionado este componente")
                     else:

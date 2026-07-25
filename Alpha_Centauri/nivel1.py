@@ -1,3 +1,9 @@
+
+#ESTE CODIGO ESTA DEPRECADO Y PRONTO VA A SER ELIMINADO Y REEMPLAZADO POR Mercurio.py 
+
+
+
+
 import pygame
 #dame pymunk o dame muerte
 import pymunk

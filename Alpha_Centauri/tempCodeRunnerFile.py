@@ -1,1 +1,1 @@
-base.texto
+click_sonido.play()
