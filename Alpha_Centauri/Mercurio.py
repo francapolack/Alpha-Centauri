@@ -42,18 +42,12 @@ pygame.mixer.music.play(-1)
 #DEFINICION DE CLASES,FUNCIONES Y OBJETOS 
 ANCHO_PC,ALTO_PC=pygame.display.get_surface().get_size()
 
-def texto_display(texto,fuente,color,x,y):
-    img=fuente.render(texto,True,color)
-    pantalla.blit(img,(x,y))
-
-""""
 class Jugador:
     def __init__(self,textura):
         self.textura_inicial=textura
         self.textura=pygame.transform.scale(self.textura_inicial,(150,50))
         self.hitbox=self.textura.get_rect()
         self.hitbox.center=(ANCHO_PC//2,ALTO_PC//2)
-"""
 
 class Partes_Rover:
     #poner esto como una libreria?
@@ -80,8 +74,8 @@ termine=Boton
 termine("Termine de construir",FUENTE_DIALOGOS,BLANCO)
 """
 
-#textura_jugador=pygame.image.load("Alpha-Centauri-6to-A-o/Alpha_Centauri/imagenes/camina_adelante.png").convert_alpha()
-#jugador=Jugador(textura_jugador)
+textura_jugador=pygame.image.load("Alpha-Centauri-6to-A-o/Alpha_Centauri/imagenes/camina_adelante.png").convert_alpha()
+jugador=Jugador(textura_jugador)
 
 textura_rueda=pygame.image.load("Alpha-Centauri-6to-A-o/Alpha_Centauri/imagenes/objetos/mercurio/ROVER_RUEDA.png").convert_alpha()
 rueda=Partes_Rover(textura_rueda,(ANCHO_PC//2))
@@ -106,45 +100,14 @@ class Main:
                 if event.key==pygame.K_ESCAPE:
                     pygame.quit()
                     sys.exit()
-            #CINEMATICA 
-            #JUEGO PRINCIALP
-            elif event.type==pygame.MOUSEBUTTONDOWN:
-                    if base.hitbox.collidepoint(event.pos):
-                        click_sonido.play()
-
-                        if "BASE" in SELECCIONADOS:
-                            print("Ya has seleccionado este componente")
-                        else:
-                            SELECCIONADOS.append("BASE")
-                            print("Que mas podriamos necesitar jsjd")
-
-                    elif rueda.hitbox.collidepoint(event.pos):
-                        click_sonido.play()
-                        if "RUEDA" in SELECCIONADOS:
-                            print("Ya has seleccionado este componente")
-                        else:
-                            SELECCIONADOS.append("RUEDA")
-                        print(SELECCIONADOS)
-                    elif camara.hitbox.collidepoint(event.pos):
-                        click_sonido.play()
-                        if "CAMARA" in SELECCIONADOS:
-                            print("Ya has seleccionado este componente")
-                        else:
-                            SELECCIONADOS.append("CAMARA")
-
-                #elif termine.hitbox.collidepoint(event.pos):
-                    #if len(SELECCIONADOS)>=3:
-                        #texto_display("Has terminado de construir tu rover!",FUENTE_DIALOGOS,NEGRO)
-               # elif len(SELECCIONADOS)<3:
-                    #texto_display("Renee: Seguro de que has terminado de construir?",FUENTE_DIALOGOS,NEGRO)
                     
         fisica.step(1/60.0)
 
 
         #MOVIMIENTO DEL JUGRADOR
-        """"
         tecla=pygame.key.get_pressed()
         if tecla[pygame.K_LEFT] or tecla[pygame.K_a]:
+            jugador.textura=pygame.image.load()
             jugador.hitbox.move_ip(-JUGADOR_VELOCIDAD,0)
 
         elif tecla[pygame.K_RIGHT] or tecla[pygame.K_d]:

@@ -36,7 +36,7 @@ mundo.gravity=(0,gravedad)
 #jugador
 jugador_textura=pygame.image.load("Alpha-Centauri-6to-A-o\Alpha_Centauri\imagenes\camina_adelante.png")
 jugador_rect=jugador_textura.get_rect()
-jugador_rect.center=(ANCHO_PC+,ALTO_PC//2)
+jugador_rect.center=(ANCHO_PC+ALTO_PC//2)
 
 
 #cosas que no son el jugador
