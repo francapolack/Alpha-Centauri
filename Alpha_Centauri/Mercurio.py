@@ -1,16 +1,29 @@
 import pygame
 import pymunk
 import sys
-
+import random
+#me duele la espaldaaaaaaaaaaaaaaaaaaa :(
 pygame.init()
 pygame.font.init()
 pygame.mixer.init()
+from class_definitions import Objetos_clickeables as Partes_Rover, Jugador
+#definicion de PANTALLA
+pantalla=pygame.display.set_mode((0,0),pygame.FULLSCREEN)
+pygame.display.set_caption("Mercurio")
 
 #CONSTANTES ACA
 FPS=60
 JUGADOR_VELOCIDAD=2
 TILE_TAM=32
 FUENTE_DIALOGOS=pygame.font.SysFont("Consolas",300)
+    #COLORES
+NEGRO=(0,0,0)
+BLANCO=(255,255,255)
+#TEXTURAS
+textura_jugador=pygame.image.load("Alpha-Centauri-6to-A-o/Alpha_Centauri/imagenes/camina_adelante.png").convert_alpha()
+rueda_textura=pygame.image.load("Alpha-Centauri-6to-A-o/Alpha_Centauri/imagenes/objetos/mercurio/ROVER_RUEDA.png").convert_alpha()
+base_textura=pygame.image.load("Alpha-Centauri-6to-A-o/Alpha_Centauri/imagenes/objetos/mercurio/ROVER_BASE.png").convert_alpha()
+camara_textura=pygame.image.load("Alpha-Centauri-6to-A-o/Alpha_Centauri/imagenes/objetos/mercurio/ROVER_CAMARA.png").convert_alpha()
 
 #VARIABLES ()
 CONDICION_COMPLETA=False
@@ -19,79 +32,47 @@ GRAVEDAD=1000
 SELECCIONADOS=[]
 ESTADO_ACTUAL=""
 
-#COLORES
-NEGRO=(0,0,0)
-BLANCO=(255,255,255)
-
-#DEFINICION DE PANTALLA Y BASES PARA EL JUEGO
-pantalla=pygame.display.set_mode((0,0),pygame.FULLSCREEN)
-pygame.display.set_caption("Mercurio")
+#BASES PARA EK JUEGO
 fps=pygame.time.Clock()
+
 fisica=pymunk.Space()
 fisica.gravity=(0,GRAVEDAD)
+
 fondo=pygame.image.load("Alpha-Centauri-6to-A-o/Alpha_Centauri/imagenes/fondos/laboratorio.png")
 fondo_rect=fondo.get_rect()
+
+#musica y SONIDOS
 musica_mercurio="Alpha-Centauri-6to-A-o/Alpha_Centauri/musica_menu.wav"
 click_sonido=pygame.mixer.Sound("Alpha-Centauri-6to-A-o/Alpha_Centauri/click.wav")
 
 pygame.mixer.music.load(musica_mercurio)
 pygame.mixer.music.set_volume(0.4)
 pygame.mixer.music.play(-1)
+
+
+#sobre las partes del ROVER
+cayendo_evento=pygame.USEREVENT
+pygame.time.set_timer(cayendo_evento,200)
+
+parte=pygame.Surface((20,20),pygame.SRCALPHA)
+rueda=Partes_Rover(rueda_textura,10,10)
+base=Partes_Rover(base_textura,10,13)
+camara=Partes_Rover(camara_textura,10,16)
+partes=[]
+
+
+
             
 
 #DEFINICION DE CLASES,FUNCIONES Y OBJETOS 
 ANCHO_PC,ALTO_PC=pygame.display.get_surface().get_size()
 
-class Jugador:
-    def __init__(self,textura):
-        self.textura_inicial=textura
-        self.textura=pygame.transform.scale(self.textura_inicial,(150,50))
-        self.hitbox=self.textura.get_rect()
-        self.hitbox.center=(ANCHO_PC//2,ALTO_PC//2)
 
-class Partes_Rover:
-    #poner esto como una libreria?
-    click=False 
-    def __init__(self,textura,x):
-        self.textura=textura
-        self.hitbox=self.textura.get_rect()
-        self.hitbox.center=(x,(ALTO_PC//4))
-    def descripcion(self,texto):
-        self.texto=texto
-""""
-class Boton:
-    def __init__(self,texto,fuente,color_texto):
-        self.boton=pygame.Rect(0,0,180,40)
-        self.color_fondo=(0,230,150)
-        pygame.draw.rect(pantalla,self.color_fondo,self.boton,border_radius=5)
-        
-        self.fuente_boton=fuente
-        self.txt=self.fuente_boton.render(texto,True,color_texto)
-        self.hitbox=self.txt.get_rect(center=self.boton.center)
-        pantalla.blit(self.txt,self.hitbox)
 
-termine=Boton
-termine("Termine de construir",FUENTE_DIALOGOS,BLANCO)
-"""
-
-textura_jugador=pygame.image.load("Alpha-Centauri-6to-A-o/Alpha_Centauri/imagenes/camina_adelante.png").convert_alpha()
 jugador=Jugador(textura_jugador)
 
-textura_rueda=pygame.image.load("Alpha-Centauri-6to-A-o/Alpha_Centauri/imagenes/objetos/mercurio/ROVER_RUEDA.png").convert_alpha()
-rueda=Partes_Rover(textura_rueda,(ANCHO_PC//2))
-rueda.descripcion("Texto de la rueda, bla bla blaaa")
-
-textura_camara=pygame.image.load("Alpha-Centauri-6to-A-o/Alpha_Centauri/imagenes/objetos/mercurio/ROVER_CAMARAS.png").convert_alpha()
-camara=Partes_Rover(textura_camara,(ANCHO_PC//6))
-camara.descripcion("Texto de la camata, bla bla blaa")
-
-textura_base=pygame.image.load("Alpha-Centauri-6to-A-o/Alpha_Centauri/imagenes/objetos/mercurio/ROVER_BASE.png").convert_alpha()
-base=Partes_Rover(textura_base,(ANCHO_PC-200))
-base.descripcion("Texto de la base,bla bla blaa")
-
-rover_1=pygame.image.load("Alpha-Centauri-6to-A-o/Alpha_Centauri/imagenes/objetos/mercurio/ROVER_BASE.png")
-
-class Main:
+def Main():
+    fps.tick(100)
     while RUNNING: 
         for event in pygame.event.get():
             if event.type==pygame.QUIT:
@@ -100,6 +81,15 @@ class Main:
                 if event.key==pygame.K_ESCAPE:
                     pygame.quit()
                     sys.exit()
+
+            if event.type==cayendo_evento:
+                x=random.randrange(10,pantalla.get_width()-10)
+                partes.append(pygame.Rect(x,-20,20,20))
+
+        for partesrect in partes[:]:
+            partesrect.y+=1
+            if partesrect.top>pantalla.get_height():
+                partes.remove(partesrect)
                     
         fisica.step(1/60.0)
 
@@ -107,7 +97,7 @@ class Main:
         #MOVIMIENTO DEL JUGRADOR
         tecla=pygame.key.get_pressed()
         if tecla[pygame.K_LEFT] or tecla[pygame.K_a]:
-            jugador.textura=pygame.image.load()
+            jugador.textura=pygame.image.load("Alpha-Centauri-6to-A-o/Alpha_Centauri/imagenes/izquierdapataadelante.png")
             jugador.hitbox.move_ip(-JUGADOR_VELOCIDAD,0)
 
         elif tecla[pygame.K_RIGHT] or tecla[pygame.K_d]:
@@ -118,15 +108,13 @@ class Main:
 
         elif tecla[pygame.K_DOWN] or tecla[pygame.K_s]:
             jugador.hitbox.move_ip(0,JUGADOR_VELOCIDAD)
-        """
+
         #MOSTRA TODO EN LA PANTALIA
         pantalla.fill(BLANCO)
         pantalla.blit(fondo,fondo_rect)
-        #pantalla.blit(jugador.textura,jugador.hitbox)
-        pantalla.blit(camara.textura,camara.hitbox)
-        pantalla.blit(base.textura,base.hitbox)
-        pantalla.blit(rueda.textura,rueda.hitbox)
-
+        pantalla.blit(jugador.textura,jugador.hitbox)
+        for partesrect in partes:
+            pantalla.blit(parte,partesrect)
 
         #reiniciooooo
         pygame.display.flip()
