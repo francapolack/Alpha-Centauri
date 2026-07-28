@@ -35,8 +35,8 @@ musica_mercurio="Alpha-Centauri-6to-A-o/Alpha_Centauri/musica_menu.wav"
 click_sonido=pygame.mixer.Sound("Alpha-Centauri-6to-A-o/Alpha_Centauri/click.wav")
 
 pygame.mixer.music.load(musica_mercurio)
-pygame.mixer.music.set_volume(1.0)
-pygame.mixer.music.play()
+pygame.mixer.music.set_volume(0.4)
+pygame.mixer.music.play(-1)
             
 
 #DEFINICION DE CLASES,FUNCIONES Y OBJETOS 
@@ -44,6 +44,7 @@ ANCHO_PC,ALTO_PC=pygame.display.get_surface().get_size()
 
 def texto_display(texto,fuente,color,x,y):
     img=fuente.render(texto,True,color)
+    pantalla.blit(img,(x,y))
 
 """"
 class Jugador:
@@ -94,6 +95,8 @@ textura_base=pygame.image.load("Alpha-Centauri-6to-A-o/Alpha_Centauri/imagenes/o
 base=Partes_Rover(textura_base,(ANCHO_PC-200))
 base.descripcion("Texto de la base,bla bla blaa")
 
+rover_1=pygame.image.load("Alpha-Centauri-6to-A-o/Alpha_Centauri/imagenes/objetos/mercurio/ROVER_BASE.png")
+
 class Main:
     while RUNNING: 
         for event in pygame.event.get():
@@ -106,29 +109,28 @@ class Main:
             #CINEMATICA 
             #JUEGO PRINCIALP
             elif event.type==pygame.MOUSEBUTTONDOWN:
-                if base.hitbox.collidepoint(event.pos):
-                    click_sonido.play()
-                    txt_base=FUENTE_DIALOGOS.render("Basee",True,BLANCO)
-                   
-                    if "BASE" in SELECCIONADOS:
-                        print("Ya has seleccionado este componente")
-                    else:
-                        SELECCIONADOS.append("BASE")
-                        print("Que mas podriamos necesitar jsjd")
+                    if base.hitbox.collidepoint(event.pos):
+                        click_sonido.play()
 
-                elif rueda.hitbox.collidepoint(event.pos):
-                    click_sonido.play()
-                    if "RUEDA" in SELECCIONADOS:
-                        print("Ya has seleccionado este componente")
-                    else:
-                        SELECCIONADOS.append("RUEDA")
-                    print(SELECCIONADOS)
-                elif camara.hitbox.collidepoint(event.pos):
-                    click_sonido.play()
-                    if "CAMARA" in SELECCIONADOS:
-                        print("Ya has seleccionado este componente")
-                    else:
-                        SELECCIONADOS.append("CAMARA")
+                        if "BASE" in SELECCIONADOS:
+                            print("Ya has seleccionado este componente")
+                        else:
+                            SELECCIONADOS.append("BASE")
+                            print("Que mas podriamos necesitar jsjd")
+
+                    elif rueda.hitbox.collidepoint(event.pos):
+                        click_sonido.play()
+                        if "RUEDA" in SELECCIONADOS:
+                            print("Ya has seleccionado este componente")
+                        else:
+                            SELECCIONADOS.append("RUEDA")
+                        print(SELECCIONADOS)
+                    elif camara.hitbox.collidepoint(event.pos):
+                        click_sonido.play()
+                        if "CAMARA" in SELECCIONADOS:
+                            print("Ya has seleccionado este componente")
+                        else:
+                            SELECCIONADOS.append("CAMARA")
 
                 #elif termine.hitbox.collidepoint(event.pos):
                     #if len(SELECCIONADOS)>=3:

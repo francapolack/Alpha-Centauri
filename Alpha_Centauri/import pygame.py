@@ -1,7 +1,10 @@
 import pygame
+import pymunk
+import sys
 
 pygame.init()
 pygame.font.init()
+pygame.mixer.init()
 
 pantalla=pygame.display.set_mode((0,0),pygame.FULLSCREEN)
 fnt=pygame.font.SysFont("Consolas",30)
@@ -11,6 +14,8 @@ def dibujar_texto(texto,fuente,color,x,y):
     pantalla.blit(img,(x,y))
 
 running=True
+
+
 while running:
     pantalla.fill((255,255,255))
     tecla=pygame.key.get_pressed()
@@ -23,3 +28,4 @@ while running:
     pygame.display.flip()
 
 pygame.quit()
+sys.quit()
