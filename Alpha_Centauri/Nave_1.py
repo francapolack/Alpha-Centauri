@@ -36,10 +36,15 @@ def main():
         pygame.mixer.music.play(-1)
     
     ruta_click = os.path.join(carpeta_actual, "click.wav")
-    sonio_click = pygame.mixer.Sound(ruta_click) if os.path.exists(ruta_click) else None
+    sonio_click = None
+    if os.path.exists(ruta_click):
+        try:
+            sonio_click = pygame.mixer.Sound(ruta_click)
+        except Exception as e:
+            print(f"Advertencia: No se pudo cargar 'click.wav' ({e}). El juego continuará sin sonido de clic.")
 
     # 3. VIDEO DE MENÚ
-    ruta_video_menu = os.path.join(carpeta_actual, "imagenes", "videomenu.mp4")
+    ruta_video_menu = Video(os.path.join(carpeta_actual,"videomenu.mp4"),no_audio=True)
     video_menu = None
     if os.path.exists(ruta_video_menu):
         try:
