@@ -17,7 +17,8 @@ jugador=Jugador(textura_jugador,500,500)
 
 #ROVER
 camara=PartesRover(800,0)
-
+rueda=PartesRover(700,0)
+base=PartesRover(600,0)
 def main():
     loop=True
     score=0
@@ -37,13 +38,33 @@ def main():
                 window.blit(text,(10,10))
 
         camara.y+=camara.velocidad
-
-        if camara.y>jugador.hitbox.y and jugador.hitbox.x<camara.x+camara.tamanio:
-            camara.y=0
-            camara.x=randint(0,550)
-            if jugador.hitbox.x>=camara.x and jugador.hitbox.y>=camara.y:
-                score+=1
-                
+        if camara.AGARRADO!=True:
+            if camara.y>jugador.hitbox.y and jugador.hitbox.x<camara.x+camara.tamanio:
+                camara.y=0
+                camara.x=randint(0,550)
+                if jugador.hitbox.x>=camara.x and jugador.hitbox.y>=camara.y:
+                    score+=1
+                    camara.AGARRADO==True
+        else:
+            if base.AGARRADO!=True:
+                if base.y>jugador.hitbox.y and jugador.hitbox.x<base.x+base.tamanio:
+                    base.y=0
+                    base.x=randint(0,550)
+                    if jugador.hitbox.x>=base.x and jugador.hitbox.y>=base.y:
+                        score+=1
+                        base.AGARRADO==True
+            else:
+                if rueda.AGARRADO!=True:
+                            if rueda.y>jugador.hitbox.y and jugador.hitbox.x<base.x+base.tamanio:
+                                rueda.y=0
+                                rueda.x=randint(0,550)
+                                if jugador.hitbox.x>=rueda.x and jugador.hitbox.y>=base.y:
+                                    score+=1
+                                    rueda.AGARRADO==True
+                else:
+                    logrado=fuente.render("Has construido el ROVER!!",True,(0,244,244))
+                    window.blit(logrado,(80,10))
+                    
         
         pygame.draw.rect(window, (0, 0, 255),(camara.x,camara.y,camara.tamanio,camara.tamanio))
         #window.blit(fondo,fondo_rect)
