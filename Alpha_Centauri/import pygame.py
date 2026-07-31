@@ -40,8 +40,8 @@ while running:
     jugador_x=max(0,min(jugador_x,ancho-50))
 
     obj_y+=obj_velocidad
-
-    if obj_y>jugador_y and jugador_x<obj_x+ obj_tamanio and jugador_x+50>obj_x:
+#   
+    if obj_y>jugador_y and jugador_x<obj_x+ obj_tamanio:
         score+=1
         obj_y=0
         obj_x=random.randint(0,ancho-50)
