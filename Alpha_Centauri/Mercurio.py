@@ -27,7 +27,7 @@ pygame.mixer.music.play(-1)
 
 #OBJETOS
 
-jugador=Jugador(textura_jugador,500,100)
+jugador=Jugador(textura_jugador,500,800)
 
 
 alien_1=Piedritas(piedritas_textura,500,500,200,120)
@@ -53,15 +53,22 @@ def main():
                 jugador.hitbox.move_ip(jugador.VELOCIDAD,0)
         elif tecla[pygame.K_UP] or tecla[pygame.K_w]:
                 jugador.hitbox.move_ip(0,-jugador.VELOCIDAD)
+                #if jugador.hitbox.colliderect(pared):
+                      #jugador.hitbox=jugador.pos_y
         elif tecla[pygame.K_DOWN] or tecla[pygame.K_s]:
                 jugador.hitbox.move_ip(0,jugador.VELOCIDAD)
+                #if jugador.hitbox.colliderect(pared):
+                      #jugador.hitbox=jugador.pos_x
 
         if jugador.hitbox.colliderect(alien_1.hitbox):
               #añadir sonidoacaaa (q voz puede tener rsto?)
               display_texto(window,600,600,"Hola!!Hola!!")
         elif jugador.hitbox.colliderect(alien_2.hitbox):
               display_texto(window,600,600,"¿De donde venis?")
-              display_texto(window,600,600,"No importa,jugamos al piedra o piedra o piedra?")
+              for event in pygame.event.get():
+                    if event.type==pygame.KEYDOWN:
+                        if event.key==pygame.K_RETURN:
+                            display_texto(window,600,600,"No importa,jugamos al piedra o piedra o piedra?")
 
 
         window.blit(alien_1.textura,alien_1.hitbox)
