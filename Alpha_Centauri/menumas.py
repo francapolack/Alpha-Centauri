@@ -415,6 +415,8 @@ def main():
                 estado_actual = "exploracion"
                 x_jugador = int(ANCHO_MUNDO * 0.80)
                 y_jugador = int(ALTO_MUNDO * 0.52)
+                import Mercurio
+                Mercurio.main()
 
         if estado_actual == "menu" and video_menu:
             video_menu.update()
@@ -733,7 +735,7 @@ def main():
             pygame.draw.circle(screen, (0, 255, 255), pos_mouse, 15, width=2)
             pygame.draw.line(screen, (0, 255, 255), (pos_mouse[0] - 22, pos_mouse[1]), (pos_mouse[0] + 22, pos_mouse[1]), 2)
             pygame.draw.line(screen, (0, 255, 255), (pos_mouse[0], pos_mouse[1] - 22), (pos_mouse[0], pos_mouse[1] + 22), 2)
-
+        
         pygame.display.flip()
         clock.tick(60)
 
