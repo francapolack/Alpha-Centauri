@@ -1,7 +1,7 @@
 import pygame
 
 class Jugador:
-    VELOCIDAD=2
+    VELOCIDAD=5
     def __init__(self,textura,x,y):
         self.textura=pygame.transform.scale(textura,(60,60))
         self.hitbox=self.textura.get_rect()
@@ -29,6 +29,6 @@ def display_texto(pan,ancho,alto,texto):
     pygame.draw.rect(pan, (0, 200, 220), caja_rect, width=3, border_radius=8)
     #dibujamos el txto 
     txto=fuente.render(texto,True,(240,240,255))
-    pan.blit(txto,(caja_rect.x+25,caja_rect.y+35))
+    pan.blit(txto,(caja_rect.x+100,caja_rect.y+45))
 
         
