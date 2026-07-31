@@ -26,7 +26,7 @@ pygame.mixer.music.play(-1)
 
 #OBJETOS
 jugador=Jugador(textura_jugador,500,500)
-alien_1=Piedritas(piedritas_textura)
+alien_1=Piedritas(piedritas_textura,500,500)
 
 def main():
     loop=True
@@ -54,6 +54,7 @@ def main():
 
         
         display_texto(window,600,600,"Holi")
+        window.blit(alien_1.textura,alien_1.hitbox)
         window.blit(jugador.textura,jugador.hitbox)
         pygame.display.update()
 main()

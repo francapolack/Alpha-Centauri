@@ -10,7 +10,7 @@ class Jugador:
 
 class NPC:
     def __init__(self,textura,x,y):
-        self.textura=pygame.transform.scale(textura,(60,60))
+        self.textura=pygame.transform.scale(textura,(100,80))
         self.hitbox=self.textura.get_rect()
         self.hitbox.center=(x,y)
     def texto(self,texto):
