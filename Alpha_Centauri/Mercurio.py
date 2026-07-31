@@ -26,7 +26,10 @@ pygame.mixer.music.set_volume(0.1)
 pygame.mixer.music.play(-1)
 
 #OBJETOS
+
 jugador=Jugador(textura_jugador,500,100)
+
+
 alien_1=Piedritas(piedritas_textura,500,500,200,120)
 alien_2=Piedritas(piedritas_izq_textura,1450,200,200,120)
 

@@ -6,6 +6,8 @@ class Jugador:
         self.textura=pygame.transform.scale(textura,(60,60))
         self.hitbox=self.textura.get_rect()
         self.hitbox.center=(x,y)
+        self.pos_x=self.hitbox.x
+        self.pos_y=self.hitbox.y
         
 
 class NPC:
