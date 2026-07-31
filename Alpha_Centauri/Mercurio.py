@@ -22,17 +22,16 @@ fondo_rect=fondo.get_rect()
 #SONIDOS
 #musica principal
 pygame.mixer.music.load("Alpha_Centauri/musica_menu.wav")
-pygame.mixer.music.set_volume(0.1)
+pygame.mixer.music.set_volume(0.4)
 pygame.mixer.music.play(-1)
 #voces
 voz_piedritas=pygame.mixer.Sound("Alpha_Centauri/sonidos/dialogopiedras.wav")
 #OBJETOS
 
-jugador=Jugador(textura_jugador,500,800)
-
+jugador=Jugador(textura_jugador,500,800,300,300)
 
 alien_1=Piedritas(piedritas_textura,500,500,200,120)
-alien_2=Piedritas(piedritas_izq_textura,1450,200,200,120)
+alien_2=Piedritas(piedritas_izq_textura,1450,500,200,120)
 
 #FUNCIONES
 def exploracion():
@@ -69,8 +68,6 @@ def main():
                 jugador.hitbox.move_ip(0,jugador.VELOCIDAD)
 
         exploracion()
-        
-
 
         
         window.blit(jugador.textura,jugador.hitbox)

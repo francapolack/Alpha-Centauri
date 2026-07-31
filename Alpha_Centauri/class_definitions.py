@@ -2,9 +2,8 @@ import pygame
 
 class Jugador:
     VELOCIDAD=5
-    def __init__(self,textura,x,y):
-        self.textura=textura
-        #pygame.transform.scale(textura,(60,60))
+    def __init__(self,textura,x,y,escalax,escalay):
+        self.textura=pygame.transform.scale(textura,(escalax,escalay))
         self.hitbox=self.textura.get_rect()
         self.hitbox.center=(x,y)
         self.pos_x=self.hitbox.x
