@@ -5,7 +5,7 @@ from class_definitions import Jugador, NPC as Piedritas,display_texto
 pygame.init()
 pygame.mixer.init()
 
-window = pygame.display.set_mode((0,0),pygame.FULLSCREEN)
+window = pygame.display.set_mode((800,600),pygame.RESIZABLE)
 fuente=pygame.font.SysFont("Consolas",36,bold=True)
 reloj=pygame.time.Clock()
 
@@ -21,12 +21,13 @@ fondo_rect=fondo.get_rect()
 #SONIDOS
 #musica principal
 pygame.mixer.music.load("Alpha-Centauri-6to-A-o/Alpha_Centauri/sonidos/mercurio.wav")
-pygame.mixer.music.set_volume(0.4)
+pygame.mixer.music.set_volume(0.1)
 pygame.mixer.music.play(-1)
 
 #OBJETOS
-jugador=Jugador(textura_jugador,500,500)
-alien_1=Piedritas(piedritas_textura,500,500)
+jugador=Jugador(textura_jugador,500,100)
+alien_1=Piedritas(piedritas_textura,500,500,200,120)
+alien_2=Piedritas(piedritas_textura,1450,200,200,120)
 
 def main():
     loop=True
@@ -50,12 +51,19 @@ def main():
                 jugador.hitbox.move_ip(0,-jugador.VELOCIDAD)
         elif tecla[pygame.K_DOWN] or tecla[pygame.K_s]:
                 jugador.hitbox.move_ip(0,jugador.VELOCIDAD)
+
+        if jugador.hitbox.colliderect(alien_1.hitbox):
+              #añadir sonidoacaaa (q voz puede tener rsto?)
+              display_texto(window,600,600,"Hola!!Hola!!")
+        elif jugador.hitbox.colliderect(alien_2.hitbox):
+              display_texto(window,600,600,"¿De donde venis?")
+              display_texto(window,600,600,"No importa,jugamos al piedra o piedra o piedra?")
               
 
-        
-        display_texto(window,600,600,"Holi")
         window.blit(alien_1.textura,alien_1.hitbox)
+        window.blit(alien_2.textura,alien_2.hitbox)
         window.blit(jugador.textura,jugador.hitbox)
+
         pygame.display.update()
 main()
 pygame.quit()
