@@ -1,12 +1,12 @@
 # Importing pygame module
 import pygame
 from random import randint
-from class_definitions import Jugador, NPC as Piedritas,display_texto
+from class_definitions import *
 pygame.init()
 pygame.mixer.init()
 
 window = pygame.display.set_mode((0,0),pygame.FULLSCREEN)
-fuente=pygame.font.SysFont("Consolas",25,bold=True)
+fuente=pygame.font.SysFont("Consolas",15)
 reloj=pygame.time.Clock()
 
 #TEXTURAS
@@ -30,19 +30,20 @@ voz_piedritas=pygame.mixer.Sound("Alpha_Centauri/sonidos/dialogopiedras.wav")
 
 jugador=Jugador(textura_jugador,500,800,300,300)
 
-alien_1=Piedritas(piedritas_textura,500,500,200,120)
-alien_2=Piedritas(piedritas_izq_textura,1450,500,200,120)
+alien_1=NPC(piedritas_textura,700,500,200,120)
+alien_2=NPC(piedritas_izq_textura,900,500,200,120)
 
 #FUNCIONES
 def exploracion():
-      if jugador.hitbox.colliderect(alien_1.hitbox):
-              voz_piedritas.play()
-              display_texto(window,600,600,"Hola!!Hola!!")
-      elif jugador.hitbox.colliderect(alien_2.hitbox):
-              voz_piedritas.play()
-              display_texto(window,600,600,"¿De donde venis?")
       window.blit(alien_1.textura,alien_1.hitbox)
       window.blit(alien_2.textura,alien_2.hitbox)
+      if jugador.hitbox.colliderect(alien_1.hitbox):
+              voz_piedritas.play()
+              display_texto(window,600,600,"Alien de piedra:\n *Sonidos de piedra*")
+      elif jugador.hitbox.colliderect(alien_2.hitbox):
+              voz_piedritas.play()
+              display_texto(window,600,600,"Alien de piedra:\n *Sonidos de piedra(pero con un acento diferente)*")
+      
 
 def main():
     loop=True
@@ -56,22 +57,16 @@ def main():
 
         window.fill((255, 255, 255))
         window.blit(fondo,fondo_rect)
+        window.blit(jugador.textura,jugador.hitbox)
 
-        tecla=pygame.key.get_pressed()
-        if tecla[pygame.K_LEFT] or tecla[pygame.K_a]:
-                jugador.hitbox.move_ip(-jugador.VELOCIDAD,0)
-        elif tecla[pygame.K_RIGHT] or tecla[pygame.K_d]:
-                jugador.hitbox.move_ip(jugador.VELOCIDAD,0)
-        elif tecla[pygame.K_UP] or tecla[pygame.K_w]:
-                jugador.hitbox.move_ip(0,-jugador.VELOCIDAD)
-        elif tecla[pygame.K_DOWN] or tecla[pygame.K_s]:
-                jugador.hitbox.move_ip(0,jugador.VELOCIDAD)
-
+        movimiento(jugador)
         exploracion()
 
         
-        window.blit(jugador.textura,jugador.hitbox)
+        
 
         pygame.display.update()
 main()
+import Jupiter
+Jupiter.main()
 pygame.quit()
