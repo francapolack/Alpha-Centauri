@@ -53,19 +53,9 @@ def display_texto(pan,ancho,alto,texto):
     txto=fuente.render(texto,True,BLANCO)
     pan.blit(txto,(caja_rect.x+100,caja_rect.y+45))
 
-def display_opciones(pan,ancho,alto,texto,distanciax):
-    fuente=pygame.font.SysFont("Consolas",36)
-     #cajita 1
-    ancho_caja=int(ancho)
-    alto_caja=int(alto*0.40)
-    caja_rect_1=pygame.Rect(0,0,ancho_caja,alto_caja)
-    caja_rect_1.center=(ancho+160,alto)
-    pygame.draw.rect(pan, AZUL_MARINO, caja_rect_1, border_radius=8)
-    pygame.draw.rect(pan, TURQUESA, caja_rect_1, width=3, border_radius=8)
-    #texto cajita1
-    txto1=fuente.render(texto,True,BLANCO)
-    pan.blit(txto1,(caja_rect_1.x+distanciax,caja_rect_1.y+40))
-
+def opciones(pan,globo,txt1,txt2):
+     fuente=pygame.font.Font(None,36)
+     globotxta=pygame.image.load()
 
 def cambio_texto(pan,f,frect,j,jrect):
     pan.blit(f,frect)

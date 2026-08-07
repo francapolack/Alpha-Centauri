@@ -51,12 +51,14 @@ def exploracion():
         display_texto(window,600,600,"MARK:Ve a ayudarlo!")
 
         cambio_texto(window,fondo,fondo_rect,jugador.textura,jugador.hitbox)
-        ayudar=display_opciones(window,600,300,500,"AYUDAR AL ALIEN",50)
-        escapar=display_opciones(window,600,300,500,"ESCAPAR",50)
+        ayudar=display_opciones(window,600,300,"AYUDAR AL ALIEN",50)
+        escapar=display_opciones(window,600,300,"ESCAPAR",50)
         window.blit(alien_1.textura,alien_1.hitbox)
 
         if pygame.mouse.get_pressed()[0] and ayudar.hitbox.collidepoint(mouse_pos):
-            print("meow")      
+            print("meow")     
+        elif pygame.mouse.get_pressed()[0] and escapar.rect.colllidepoint(mouse_pos):
+            print("woof") 
 
 
 def main():
