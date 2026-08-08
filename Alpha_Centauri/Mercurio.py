@@ -28,7 +28,7 @@ pygame.mixer.music.play(-1)
 voz_piedritas=pygame.mixer.Sound("Alpha_Centauri/sonidos/dialogopiedras.wav")
 #OBJETOS
 
-jugador=Jugador(textura_jugador,500,800,300,300)
+jugador=Jugador(textura_jugador,500,800,400,400)
 
 alien_1=NPC(piedritas_textura,700,500,200,120)
 alien_2=NPC(piedritas_izq_textura,900,500,200,120)
@@ -39,10 +39,10 @@ def exploracion():
       window.blit(alien_2.textura,alien_2.hitbox)
       if jugador.hitbox.colliderect(alien_1.hitbox):
               voz_piedritas.play()
-              display_texto(window,600,600,"Alien de piedra:\n *Sonidos de piedra*")
+              display_texto(window,"Alien de piedra:\n *Sonidos de piedra*")
       elif jugador.hitbox.colliderect(alien_2.hitbox):
               voz_piedritas.play()
-              display_texto(window,600,600,"Alien de piedra:\n *Sonidos de piedra(pero con un acento diferente)*")
+              display_texto(window,"Alien de piedra:\n *Sonidos de piedra(pero con un acento diferente)*")
       
 
 def main():
@@ -59,11 +59,8 @@ def main():
         window.blit(fondo,fondo_rect)
         window.blit(jugador.textura,jugador.hitbox)
 
-        movimiento(jugador)
+        jugador.movimiento(jugador)
         exploracion()
-
-        
-        
 
         pygame.display.update()
 main()
