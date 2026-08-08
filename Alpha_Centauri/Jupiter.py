@@ -25,7 +25,7 @@ pygame.mixer.music.load("Alpha_Centauri/musica_menu.wav")
 pygame.mixer.music.set_volume(0.4)
 pygame.mixer.music.play(-1)
 #voces
-voz_gigantes=pygame.mixer.Sound("Alpha_Centauri/sonidos/dialogopiedras.wav")
+voz_gigantes=pygame.mixer.Sound("Alpha_Centauri/sonidos/dialogojupiter.mp3")
 #OBJETOS
 
 jugador=Jugador(textura_jugador,500,800,80,80)
