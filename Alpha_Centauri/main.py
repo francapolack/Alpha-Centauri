@@ -3,17 +3,7 @@ import os
 import sys
 import random
 from pyvidplayer2 import Video 
-
-def aplicar_filtro_oscuro(superficie, opacidad_personaje):
-    """Genera una copia oscurecida del personaje para darle énfasis al que habla."""
-    if superficie is None:
-        return None
-    img_oscura = superficie.copy()
-    filtro = pygame.Surface(img_oscura.get_size(), pygame.SRCALPHA)
-    filtro.fill((0, 0, 0, 120)) 
-    img_oscura.blit(filtro, (0, 0), special_flags=pygame.BLEND_RGBA_SUB)
-    img_oscura.set_alpha(opacidad_personaje)
-    return img_oscura
+from clases_funciones import aplicar_filtro_oscuro
 
 def main():
     pygame.init()
@@ -54,6 +44,7 @@ def main():
             video_menu.mute()
 
     # 4. CARGA DE ASSETS GRÁFICOS
+    """"
     assets = {}
     nombres_archivos = {
         "fondointro": "fondointro.png",
@@ -74,24 +65,11 @@ def main():
             assets[clave] = pygame.image.load(ruta).convert_alpha()
         else:
             assets[clave] = None
-
+    """"
     # 4B. ANIMACIONES DEL ASTRONAUTA
     ALTO_MAPA_ASTRO = 58  
 
-    def cargar_img_mapa(nombre_archivo, ancho_fijo=None):
-        ruta = os.path.join(carpeta_actual, "imagenes", nombre_archivo)
-        if os.path.exists(ruta):
-            img = pygame.image.load(ruta).convert_alpha()
-            if ancho_fijo:
-                ancho_final = ancho_fijo
-            else:
-                ancho_final = int(img.get_width() * (ALTO_MAPA_ASTRO / img.get_height()))
-            return pygame.transform.scale(img, (ancho_final, ALTO_MAPA_ASTRO))
-        
-        ancho_aux = ancho_fijo if ancho_fijo else 35
-        surf = pygame.Surface((ancho_aux, ALTO_MAPA_ASTRO))
-        surf.fill((255, 0, 0))
-        return surf
+
 
     img_adelante = cargar_img_mapa("camina adelante.png")
     img_atras = cargar_img_mapa("camina atras.png")

@@ -1,7 +1,7 @@
 # Importing pygame module
 import pygame
 from random import randint
-from class_definitions import *
+from Alpha_Centauri.clases_funciones import *
 pygame.init()
 pygame.mixer.init()
 

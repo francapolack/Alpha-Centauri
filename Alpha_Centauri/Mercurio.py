@@ -1,7 +1,7 @@
 # Importing pygame module
 import pygame
 from random import randint
-from class_definitions import *
+from Alpha_Centauri.clases_funciones import *
 pygame.init()
 pygame.mixer.init()
 
@@ -11,7 +11,8 @@ reloj=pygame.time.Clock()
 
 #TEXTURAS
 textura_jugador=pygame.image.load("Alpha_Centauri/imagenes/objetos/mercurio/rover.png").convert_alpha()
-
+textura_jugador_arriba=pygame.image.load("Alpha_Centauri/imagenes/objetos/mercurio/roverarr.png").convert_alpha()
+textura_jugador_abajo=pygame.image.load("Alpha_Centauri/imagenes/objetos/mercurio/roveraba.png").convert_alpha()
 
 piedritas_textura=pygame.image.load("Alpha_Centauri/imagenes/objetos/mercurio/alien_1.png")
 piedritas_izq_textura=pygame.transform.flip(piedritas_textura, True, False)

@@ -1,11 +1,12 @@
 import pygame
-
-#colores
+import os
+#COLORES
 NEGRO=(0,0,0)
 BLANCO=(240,240,255)
 TURQUESA=(0, 200, 220)
 AZUL_MARINO=(20, 20, 35)
 
+#CLASES
 class Jugador:
     VELOCIDAD=9
     def __init__(self,textura,x,y,escalax,escalay):
@@ -15,16 +16,20 @@ class Jugador:
         self.hitbox.center=(x,y)
         self.pos_x=self.hitbox.x
         self.pos_y=self.hitbox.y   
-    def movimiento(self,jugador):
+    def movimiento(self,jugador,textura,aba,arr):
         tecla=pygame.key.get_pressed()
         if tecla[pygame.K_LEFT] or tecla[pygame.K_a]:
+                self.textura_inicial=pygame.transform.flip(textura,True,False)
                 jugador.hitbox.move_ip(-jugador.VELOCIDAD,0)
         elif tecla[pygame.K_RIGHT] or tecla[pygame.K_d]:
                 jugador.hitbox.move_ip(jugador.VELOCIDAD,0)
         elif tecla[pygame.K_UP] or tecla[pygame.K_w]:
+                self.textura_inicial=arr
                 jugador.hitbox.move_ip(0,-jugador.VELOCIDAD)
         elif tecla[pygame.K_DOWN] or tecla[pygame.K_s]:
+                self.textura_inicial=aba
                 jugador.hitbox.move_ip(0,jugador.VELOCIDAD)
+
 
 
 class NPC:
@@ -38,7 +43,7 @@ class NPC:
             self.textura_inicial=pygame.transform.flip(textura, True, False)
             
 
-
+#FUNCIONES
 #no es una clase pero no conviene hacer otro docx separado 
 def display_texto(pan,texto):
     fuente=pygame.font.SysFont("Consolas",36,bold=True)
@@ -81,4 +86,31 @@ def opciones(pan,f,frect,txt1,txt2):
 def cambio_texto(pan,f,frect,j,jrect):
     pan.blit(f,frect)
     pan.blit(j,jrect)
+
+
+
+def aplicar_filtro_oscuro(superficie, opacidad_personaje):
+    """Genera una copia oscurecida del personaje para darle énfasis al que habla."""
+    if superficie is None:
+        return None
+    img_oscura = superficie.copy()
+    filtro = pygame.Surface(img_oscura.get_size(), pygame.SRCALPHA)
+    filtro.fill((0, 0, 0, 120)) 
+    img_oscura.blit(filtro, (0, 0), special_flags=pygame.BLEND_RGBA_SUB)
+    img_oscura.set_alpha(opacidad_personaje)
+    return img_oscura
+
+def cargar_img_mapa(nombre_archivo, ancho_fijo=None,ALTO_MAPA):
+    ruta = os.path.join(carpeta_actual, "imagenes", nombre_archivo)
+    if os.path.exists(ruta):
+        img = pygame.image.load(ruta).convert_alpha()
+        if ancho_fijo:
+            ancho_final = ancho_fijo
+        else:
+            ancho_final = int(img.get_width() * (ALTO_MAPA / img.get_height()))
+        return pygame.transform.scale(img, (ancho_final, ALTO_MAPA))
         
+    ancho_aux = ancho_fijo if ancho_fijo else 35
+    surf = pygame.Surface((ancho_aux, ALTO_MAPA))
+    surf.fill((255, 0, 0))
+    return surf
