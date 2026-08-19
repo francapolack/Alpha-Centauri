@@ -100,8 +100,8 @@ def aplicar_filtro_oscuro(superficie, opacidad_personaje):
     img_oscura.set_alpha(opacidad_personaje)
     return img_oscura
 
-def cargar_img_mapa(nombre_archivo, ancho_fijo=None,ALTO_MAPA):
-    ruta = os.path.join(carpeta_actual, "imagenes", nombre_archivo)
+def cargar_img_mapa(carpeta,nombre_archivo, ALTO_MAPA,ancho_fijo=None):
+    ruta = os.path.join(carpeta, "imagenes", nombre_archivo)
     if os.path.exists(ruta):
         img = pygame.image.load(ruta).convert_alpha()
         if ancho_fijo:
@@ -114,3 +114,8 @@ def cargar_img_mapa(nombre_archivo, ancho_fijo=None,ALTO_MAPA):
     surf = pygame.Surface((ancho_aux, ALTO_MAPA))
     surf.fill((255, 0, 0))
     return surf
+
+def os_join(carpeta,nombre):
+     objeto=os.path.join(carpeta,nombre)
+     if os.path.exists:
+          return True

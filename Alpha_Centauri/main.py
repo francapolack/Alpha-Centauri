@@ -3,15 +3,16 @@ import os
 import sys
 import random
 from pyvidplayer2 import Video 
-from clases_funciones import aplicar_filtro_oscuro
+from clases_funciones import aplicar_filtro_oscuro,cargar_img_mapa, os_join
 
 def main():
     pygame.init()
     pygame.mixer.init()
 
-    # 1. CONFIGURACIÓN DE VENTANA
+    #CONSTANTES
     ANCHO_PANTALLA = 1000
     ALTO_PANTALLA = 600
+    ALTO_MAPA_ASTRO = 58 
     screen = pygame.display.set_mode((ANCHO_PANTALLA, ALTO_PANTALLA), pygame.RESIZABLE)
     pygame.display.set_caption("Alpha Centauri")
     
@@ -19,9 +20,9 @@ def main():
     carpeta_actual = os.path.dirname(__file__)
 
     # 2. AUDIO
-    ruta_musica = os.path.join(carpeta_actual, "musica_menu.mp3")
-    if os.path.exists(ruta_musica):
-        pygame.mixer.music.load(ruta_musica)
+    fondo_musica=os_join(carpeta_actual,"musica_menu.mp3")
+    if os_join:
+        pygame.mixer.music.load(fondo_musica)
         pygame.mixer.music.set_volume(0.4)
         pygame.mixer.music.play(-1)
     
@@ -44,7 +45,6 @@ def main():
             video_menu.mute()
 
     # 4. CARGA DE ASSETS GRÁFICOS
-    """"
     assets = {}
     nombres_archivos = {
         "fondointro": "fondointro.png",
@@ -65,14 +65,12 @@ def main():
             assets[clave] = pygame.image.load(ruta).convert_alpha()
         else:
             assets[clave] = None
-    """"
+
     # 4B. ANIMACIONES DEL ASTRONAUTA
-    ALTO_MAPA_ASTRO = 58  
+     
 
-
-
-    img_adelante = cargar_img_mapa("camina adelante.png")
-    img_atras = cargar_img_mapa("camina atras.png")
+    img_adelante = cargar_img_mapa(carpeta_actual,"camina adelante.png",ALTO_MAPA_ASTRO)
+    img_atras = cargar_img_mapa(carpeta_actual,"camina atras.png",ALTO_MAPA_ASTRO)
     img_adelante_espejo = pygame.transform.flip(img_adelante, True, False)
     img_atras_espejo = pygame.transform.flip(img_atras, True, False)
     
