@@ -1,7 +1,7 @@
 # Importing pygame module
 import pygame
 from random import randint
-from Alpha_Centauri.clases_funciones import *
+from clases_funciones import *
 pygame.init()
 pygame.mixer.init()
 
@@ -10,8 +10,8 @@ fuente=pygame.font.SysFont("Consolas",25,bold=True)
 reloj=pygame.time.Clock()
 mouse_pos=pygame.mouse.get_pos()
 #TEXTURAS
-textura_jugador=pygame.image.load("Alpha_Centauri/imagenes/camina_adelante.png").convert_alpha()
-izq_jugador=pygame.image.load("Alpha_Centauri/imagenes/izquierdapataadelante.png")
+textura_jugador=pygame.image.load("Alpha_Centauri/imagenes/spritesviejos/camina_adelante.png").convert_alpha()
+izq_jugador=pygame.image.load("Alpha_Centauri/imagenes//spritesviejos/izquierdapataadelante.png")
 
 piedritas_textura=pygame.image.load("Alpha_Centauri/imagenes/objetos/jupiter/alien_1.png")
 piedritas_izq_textura=pygame.transform.flip(piedritas_textura, True, False)
@@ -37,7 +37,7 @@ def cinematica():
       pass
 def exploracion(): 
       window.blit(alien_1.textura,alien_1.hitbox)
-      display_texto(window,600,600,"RENEE:¡¿Qué es eso?!")         
+      #display_texto(window,600,600,"RENEE:¡¿Qué es eso?!")         
       if alien_1.hitbox.x<1000:
         alien_1.hitbox.x+=7
       else:
@@ -51,14 +51,14 @@ def exploracion():
         display_texto(window,600,600,"MARK:Ve a ayudarlo!")
 
         cambio_texto(window,fondo,fondo_rect,jugador.textura,jugador.hitbox)
-        ayudar=display_opciones(window,600,300,"AYUDAR AL ALIEN",50)
-        escapar=display_opciones(window,600,300,"ESCAPAR",50)
+        #ayudar=display_opciones(window,600,300,"AYUDAR AL ALIEN",50)
+        #escapar=display_opciones(window,600,300,"ESCAPAR",50)
         window.blit(alien_1.textura,alien_1.hitbox)
 
-        if pygame.mouse.get_pressed()[0] and ayudar.hitbox.collidepoint(mouse_pos):
-            print("meow")     
-        elif pygame.mouse.get_pressed()[0] and escapar.rect.colllidepoint(mouse_pos):
-            print("woof") 
+       # if pygame.mouse.get_pressed()[0] and ayudar.hitbox.collidepoint(mouse_pos):
+           # print("meow")     
+       # elif pygame.mouse.get_pressed()[0] and escapar.rect.colllidepoint(mouse_pos):
+           # print("woof") 
 
 
 def main():

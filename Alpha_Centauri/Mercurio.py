@@ -1,7 +1,7 @@
 # Importing pygame module
 import pygame
 from random import randint
-from Alpha_Centauri.clases_funciones import *
+from clases_funciones import *
 pygame.init()
 pygame.mixer.init()
 
@@ -43,7 +43,7 @@ def exploracion():
               display_texto(window,"Alien de piedra:\n *Sonidos de piedra*")
       elif jugador.hitbox.colliderect(alien_2.hitbox):
               voz_piedritas.play()
-              display_texto(window,"Alien de piedra:\n *Sonidos de piedra(pero con un acento diferente)*")
+              display_texto(window,"")
       
 
 def main():
@@ -60,7 +60,7 @@ def main():
         window.blit(fondo,fondo_rect)
         window.blit(jugador.textura,jugador.hitbox)
 
-        jugador.movimiento(jugador)
+        jugador.movimiento(jugador,"Alpha_Centauri/imagenes/objetos/mercurio/rover.png","Alpha_Centauri/imagenes/objetos/mercurio/roverarr.png","Alpha_Centauri/imagenes/objetos/mercurio/roveraba.png")
         exploracion()
 
         pygame.display.update()
