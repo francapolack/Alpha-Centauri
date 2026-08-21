@@ -1,5 +1,4 @@
 import pygame
-import os
 import cv2,time
 from ffpyplayer.player import MediaPlayer
 #COLORES
@@ -7,10 +6,13 @@ NEGRO=(0,0,0)
 BLANCO=(240,240,255)
 TURQUESA=(0, 200, 220)
 AZUL_MARINO=(20, 20, 35)
+#OTROS
 
 #FUNCIONES
 
-#VIDEOS
+
+    
+#VIDEOS (NO TERMINADO)
 def video(ruta):
     video=cv2.VideoCapture(ruta)
     audio=MediaPlayer(ruta)
@@ -95,6 +97,9 @@ def cambio_texto(pan,f,frect,j,jrect):
 
 
 
+
+
+
 #CLASES
 class Jugador:
     VELOCIDAD=9
@@ -105,18 +110,15 @@ class Jugador:
         self.hitbox.center=(x,y)
         self.pos_x=self.hitbox.x
         self.pos_y=self.hitbox.y
-    def movimiento(self,jugador,textura,aba,arr):
+    def movimiento(self,jugador):
         tecla=pygame.key.get_pressed()
         if tecla[pygame.K_LEFT] or tecla[pygame.K_a]:
-                self.textura_inicial=pygame.transform.flip(textura,True,False)
                 jugador.hitbox.move_ip(-jugador.VELOCIDAD,0)
         elif tecla[pygame.K_RIGHT] or tecla[pygame.K_d]:
                 jugador.hitbox.move_ip(jugador.VELOCIDAD,0)
         elif tecla[pygame.K_UP] or tecla[pygame.K_w]:
-                self.textura_inicial=arr
                 jugador.hitbox.move_ip(0,-jugador.VELOCIDAD)
         elif tecla[pygame.K_DOWN] or tecla[pygame.K_s]:
-                self.textura_inicial=aba
                 jugador.hitbox.move_ip(0,jugador.VELOCIDAD)
 
 
@@ -133,7 +135,12 @@ class NPC:
 
 
 class Objeto:
-     def __init__(self,textura,x,y,escalax,escalay,texto,sonido,guardado=False):
+     def __init__(self,textura,x,y,escalax,escalay,texto,sonido):
           self.textura=textura
-          self
+          self.x=x
+          self.y=y
+          self.escalax=escalax
+          self.escalay=escalay
+          self.texto=texto
+          self.sonido=sonido
           
