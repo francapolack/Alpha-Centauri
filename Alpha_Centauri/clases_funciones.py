@@ -1,5 +1,7 @@
 import pygame
 import os
+import cv2,time
+from ffpyplayer.player import MediaPlayer
 #COLORES
 NEGRO=(0,0,0)
 BLANCO=(240,240,255)
@@ -7,6 +9,44 @@ TURQUESA=(0, 200, 220)
 AZUL_MARINO=(20, 20, 35)
 
 #FUNCIONES
+
+#VIDEOS
+def video(ruta):
+    video=cv2.VideoCapture(ruta)
+    audio=MediaPlayer(ruta)
+
+    fps=video.get(cv2.CAP_PROP_FPS)
+    delay=1.0/fps if fps>0 else 1.0/30.0
+
+    while video.isOpened():
+         comienzo=time.time()
+
+         sep,frame=video.read()#sep=si entro el video
+         frame=cv2.resize(frame,(0,0),fx=0.8,fy=0.8)
+         audio_frame,val=audio.get_frame()
+
+         if not sep:
+              break
+
+         cv2.imshow('Intro',frame)
+         if val=="eof":
+              break
+         elif val!="eof" and audio_frame is not None:
+              pass
+
+        #  lapso=time.time()-comienzo
+        #  tiempo_duermo=max(0,delay-lapso)
+        #  time.sleep(tiempo_duermo)
+         lapso=(int(fps)-int((time.time()-comienzo))*1000)
+
+         if cv2.waitKey(max(1,lapso)) & 0xFF == ord('q'):
+                     break
+
+        
+    video.release()
+    audio.close_player()
+    cv2.destroyAllWindows()
+
 
 #DISPLAY DE TEXTO EN CAJA
 def display_texto(pan,texto):
