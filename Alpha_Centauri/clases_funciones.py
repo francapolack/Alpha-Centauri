@@ -1,6 +1,6 @@
 import pygame
 import cv2,time
-from ffpyplayer.player import MediaPlayer
+from pyvidplayer2 import Video
 #COLORES
 NEGRO=(0,0,0)
 BLANCO=(240,240,255)
@@ -13,41 +13,19 @@ AZUL_MARINO=(20, 20, 35)
 
     
 #VIDEOS (NO TERMINADO)
-def video(ruta):
-    video=cv2.VideoCapture(ruta)
-    audio=MediaPlayer(ruta)
-
-    fps=video.get(cv2.CAP_PROP_FPS)
-    delay=1.0/fps if fps>0 else 1.0/30.0
-
-    while video.isOpened():
-         comienzo=time.time()
-
-         sep,frame=video.read()#sep=si entro el video
-         frame=cv2.resize(frame,(0,0),fx=0.8,fy=0.8)
-         audio_frame,val=audio.get_frame()
-
-         if not sep:
-              break
-
-         cv2.imshow('Intro',frame)
-         if val=="eof":
-              break
-         elif val!="eof" and audio_frame is not None:
-              pass
-
-        #  lapso=time.time()-comienzo
-        #  tiempo_duermo=max(0,delay-lapso)
-        #  time.sleep(tiempo_duermo)
-         lapso=(int(fps)-int((time.time()-comienzo))*1000)
-
-         if cv2.waitKey(max(1,lapso)) & 0xFF == ord('q'):
-                     break
-
-        
-    video.release()
-    audio.close_player()
-    cv2.destroyAllWindows()
+def video(ruta,nombre):
+    vid=Video(ruta,use_pygame_audio=True)
+    display=pygame.display.set_mode((vid.current_size))
+    pygame.display.set_caption(nombre)
+    while vid.active:
+         for event in pygame.event.get():
+              if event.type==pygame.QUIT:
+                   vid.stop()
+         if vid.draw(display,(0,0),force_draw=False):
+              pygame.display.update()
+         pygame.time.wait(16)
+    vid.close()
+    pygame.quit()
 
 
 #DISPLAY DE TEXTO EN CAJA
