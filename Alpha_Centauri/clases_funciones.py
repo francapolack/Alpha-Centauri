@@ -1,6 +1,7 @@
 import pygame
 import cv2,time
 from pyvidplayer2 import Video
+import os
 #COLORES
 NEGRO=(0,0,0)
 BLANCO=(240,240,255)
@@ -12,7 +13,13 @@ AZUL_MARINO=(20, 20, 35)
 
 
     
-#VIDEOS (NO TERMINADO)
+#VIDEOS
+
+#dejar que python reconozca a ffmpeg (NO SE PORQUE NO LO RECONOCE NORMALMENTE)
+FFMPEG_RUTA=r"C:/ffmpeg/bin"
+os.environ["PATH"]=FFMPEG_RUTA+os.pathsep+os.environ["PATH"]
+
+#funcion de video
 def video(ruta,nombre):
     vid=Video(ruta,use_pygame_audio=True)
     display=pygame.display.set_mode((vid.current_size))
