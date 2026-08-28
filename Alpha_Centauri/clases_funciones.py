@@ -16,7 +16,6 @@ AZUL_MARINO=(20, 20, 35)
 
     
 #VIDEOS
-
 FFMPEG_RUTA=r"C:/ffmpeg/bin"
 #os environ= como un diccionario de las variables de entorno (donde estan como las librerias y cosas asi) y os.pathsep=(buscador de carpetas)
 os.environ["PATH"]=FFMPEG_RUTA+os.pathsep+os.environ["PATH"]
@@ -38,8 +37,15 @@ def video(ruta,nombre):
 
 
 #DISPLAY DE TEXTO EN CAJA (O CAJA DE DIALOGO)
-def display_texto(pan,texto):
+def display_texto(pan,texto,textura):
     fuente=pygame.font.SysFont("Consolas",36,bold=True)
+
+    #textura del personaje que habla
+    textura=pygame.image.load(textura).convert_alpha()
+    textura=pygame.transform.scale(textura,(750,700))
+    textura_rect=textura.get_rect()
+    pan.blit(textura,textura_rect)
+
     #primero la cajita del txto
     ancho_caja=600*2
     alto_caja=int(600*0.30)
@@ -50,7 +56,7 @@ def display_texto(pan,texto):
     #dibujamos el txto 
     txto=fuente.render(texto,True,BLANCO)
     pan.blit(txto,(caja_rect.x+100,caja_rect.y+45))
-
+    
 #DISPLAY DE INFO AL SALIR DE LA NAVE
 def planeta_info(pan,texto1,texto2,color):
     #caja de texto principal
@@ -74,8 +80,8 @@ def planeta_info(pan,texto1,texto2,color):
     txto2=fuente_titulo.render(texto2,True,color)
     pan.blit(txto2,(titulo_caja.x+130,titulo_caja.y+25))
     #boton de chau (en otra cajita + chiquita)
-    
 
+#BOTON UNIVERSAL DE CHAU
 def boton_chau(pan,x,y,color,texto):
     fuente=pygame.font.SysFont("twcen",30,bold=True)
     boton=pygame.Rect(0,0,(600-300),int(700*0.13)) 
@@ -84,12 +90,6 @@ def boton_chau(pan,x,y,color,texto):
     txto=fuente.render(texto,True,BLANCO)
     pan.blit(txto,(boton.x+100,boton.y+45))
     return boton
-
-    
-    
-
-     
-
 
 
 #DISPLAY DE 2 OPCIONES (sin terminar)
@@ -117,6 +117,12 @@ def opciones(pan,f,frect,txt1,txt2):
      #globo2=globotxt_flip
      #globo2_rect=globo2.get_rect()
     """
+#FILTRO OSCURO PARA CONVOS CON PERSONAJES
+def filtro(x,y,pan):
+     filtro=pygame.Surface((x,y),pygame.SRCALPHA)
+     filtro.fill((0,0,0,128))
+     pan.blit(filtro,(0,0))
+
 
 #LIMPIAR PANTALLA PARA TEXTO
 def cambio_texto(pan,f,frect,j,jrect):
@@ -152,10 +158,9 @@ class TriviaNPC:
           self.textura=pygame.transform.scale(self.textura,(escalax,escalay))
           self.rect=self.textura.get_rect()
           self.rect.center=(x,y)
-     def texto(self,pan,texto):
-          display_texto(pan,texto)
-          boton_chau(pan,500,500,pygame.Color("skyblue1"),"Responder")
-          
+     def texto(self,pan,texto,textura_convo):
+          display_texto(pan,texto,textura_convo)
+
 
 
 class NPC(pygame.sprite.Sprite):
