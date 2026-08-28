@@ -10,40 +10,42 @@ fuente=pygame.font.SysFont("Consolas",15)
 reloj=pygame.time.Clock()
 
 #TEXTURAS
-textura_jugador=pygame.image.load("Alpha_Centauri/imagenes/objetos/mercurio/rover.png").convert_alpha()
-textura_jugador_arriba=pygame.image.load("Alpha_Centauri/imagenes/objetos/mercurio/roverarr.png").convert_alpha()
-textura_jugador_abajo=pygame.image.load("Alpha_Centauri/imagenes/objetos/mercurio/roveraba.png").convert_alpha()
+textura_jugador=pygame.image.load("Alpha_Centauri/assets/imagenes/objetos/mercurio/rover.png").convert_alpha()
 
-piedritas_textura=pygame.image.load("Alpha_Centauri/imagenes/objetos/mercurio/alien_1.png")
+
+piedritas_textura=pygame.image.load("Alpha_Centauri/assets/imagenes/objetos/mercurio/alien_1.png")
 piedritas_izq_textura=pygame.transform.flip(piedritas_textura, True, False)
 
-fondo=pygame.image.load("Alpha_Centauri/imagenes/fondos/mercurio.png")
+fondo=pygame.image.load("Alpha_Centauri/assets/imagenes/fondos/mercurio.png")
 fondo_rect=fondo.get_rect()
 
 #SONIDOS
 #musica principal
-pygame.mixer.music.load("Alpha_Centauri/musica_menu.wav")
+pygame.mixer.music.load("Alpha_Centauri//assets/sonidos/musica_menu.wav")
 pygame.mixer.music.set_volume(0.4)
 pygame.mixer.music.play(-1)
 #voces
-voz_piedritas=pygame.mixer.Sound("Alpha_Centauri/sonidos/dialogopiedras.wav")
+voz_piedritas=pygame.mixer.Sound("Alpha_Centauri/assets/sonidos/dialogopiedras.wav")
 #OBJETOS
 
-jugador=Jugador(textura_jugador,500,800,400,400)
+jugador=Jugador(textura_jugador,600,800,400,300)
 
-alien_1=NPC(piedritas_textura,700,500,200,120)
-alien_2=NPC(piedritas_izq_textura,900,500,200,120)
+lista_npcs=pygame.sprite.Group()
+for i in range(4):
+     lista_npcs.add(NPC(700,1500,500,700,"Alpha_Centauri/assets/imagenes/objetos/mercurio/alien_1.png",100,100))
+for i in range(2):
+     lista_npcs.add(NPC(200,800,500,700,"Alpha_Centauri/assets/imagenes/objetos/mercurio/alien_1.png",100,100))
+     
 
 #FUNCIONES
-def exploracion():
-      window.blit(alien_1.textura,alien_1.hitbox)
-      window.blit(alien_2.textura,alien_2.hitbox)
-      if jugador.hitbox.colliderect(alien_1.hitbox):
-              voz_piedritas.play()
-              display_texto(window,"Alien de piedra:\n *Sonidos de piedra*")
-      elif jugador.hitbox.colliderect(alien_2.hitbox):
-              voz_piedritas.play()
-              display_texto(window,"")
+# def exploracion():
+      
+#       if jugador.hitbox.colliderect(alien_1.hitbox):
+#               voz_piedritas.play()
+#               display_texto(window,"Alien de piedra:\n *Sonidos de piedra*")
+#       elif jugador.hitbox.colliderect(alien_2.hitbox):
+#               voz_piedritas.play()
+#               display_texto(window,"")
       
 
 def main():
@@ -60,11 +62,12 @@ def main():
         window.blit(fondo,fondo_rect)
         window.blit(jugador.textura,jugador.hitbox)
 
-        jugador.movimiento(jugador,"Alpha_Centauri/imagenes/objetos/mercurio/rover.png","Alpha_Centauri/imagenes/objetos/mercurio/roverarr.png","Alpha_Centauri/imagenes/objetos/mercurio/roveraba.png")
-        exploracion()
+        jugador.movimiento(jugador)
+        lista_npcs.draw(window)
+        planeta_info(window,"info de mercurio \nblah blah blah","Mercurio",(pygame.Color("azure3")))
 
         pygame.display.update()
 main()
-import Jupiter
-Jupiter.main()
+# import Jupiter
+# Jupiter.main()
 pygame.quit()

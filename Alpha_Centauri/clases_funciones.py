@@ -2,12 +2,13 @@ import pygame
 import cv2,time
 from pyvidplayer2 import Video
 import os
-from random import randint
+from random import randrange
 #COLORES
 NEGRO=(0,0,0)
 BLANCO=(240,240,255)
 TURQUESA=(0, 200, 220)
 AZUL_MARINO=(20, 20, 35)
+
 #OTROS
 
 #FUNCIONES
@@ -36,11 +37,11 @@ def video(ruta,nombre):
     pygame.quit()
 
 
-#DISPLAY DE TEXTO EN CAJA
+#DISPLAY DE TEXTO EN CAJA (O CAJA DE DIALOGO)
 def display_texto(pan,texto):
     fuente=pygame.font.SysFont("Consolas",36,bold=True)
     #primero la cajita del txto
-    ancho_caja=int(600*2)
+    ancho_caja=600*2
     alto_caja=int(600*0.30)
     caja_rect=pygame.Rect(0,0,ancho_caja,alto_caja)
     caja_rect.center=(600+160,600)
@@ -49,6 +50,33 @@ def display_texto(pan,texto):
     #dibujamos el txto 
     txto=fuente.render(texto,True,BLANCO)
     pan.blit(txto,(caja_rect.x+100,caja_rect.y+45))
+
+#DISPLAY DE INFO AL SALIR DE LA NAVE
+def planeta_info(pan,texto1,texto2,color):
+    #caja de texto principal
+    fuente=pygame.font.SysFont("Consolas",36,bold=True)
+    #primero la cajita del txto
+    ancho_caja=600
+    alto_caja=700
+    caja_rect=pygame.Rect(0,0,ancho_caja,alto_caja)
+    caja_rect.center=(1100,400)
+    pygame.draw.rect(pan, AZUL_MARINO, caja_rect, border_radius=8)
+    pygame.draw.rect(pan, TURQUESA, caja_rect, width=3, border_radius=8)
+    #caja de texto del TITULO
+    titulo_caja=pygame.Rect(0,0,int(ancho_caja*0.10),int(alto_caja*0.10))
+    pygame.draw.rect(pan,BLANCO,titulo_caja,width=3,border_radius=10)
+    #txto principal
+    txto=fuente.render(texto1,True,BLANCO)
+    pan.blit(txto,(caja_rect.x+100,caja_rect.y+45))
+    #texto titulo
+    txto2=fuente.render(texto2,True,color)
+    pan.blit(txto2,(titulo_caja.x+100,titulo_caja.y+45))
+    #boton de chau (en otra cajita + chiquita)
+    
+
+     
+
+
 
 #DISPLAY DE 2 OPCIONES (sin terminar)
 def opciones(pan,f,frect,txt1,txt2):
@@ -109,48 +137,24 @@ class Jugador:
 
 
 #medio deprecado....
-# class NPC:
-#     def __init__(self,textura,x,y,escalax,escalay):
-#         self.estado="DERECHA"
-#         self.textura_inicial=textura
-#         self.textura=pygame.transform.scale(textura,(escalax,escalay))
-#         self.hitbox=self.textura.get_rect()
-#         self.hitbox.center=(x,y)
+class TriviaNPC:
+     def __init__(self,textura,x,y,escalax,escalay):
+         self.estado="DERECHA"
+         self.textura_inicial=textura
+         self.textura=pygame.transform.scale(textura,(escalax,escalay))
+         self.hitbox=self.textura.get_rect()
+         self.hitbox.center=(x,y)
        
 class NPC(pygame.sprite.Sprite):
-     def __init__(self,x1,x2,y1,y2,textura):
+     def __init__(self,x1,x2,y1,y2,textura,escalax,escalay):
           super().__init__()
-          x=randint(x1,x2)
-          y=randint(y1,y2)
-          self.image=pygame.image.load("Alpha_Centauri/assets/imagenes/objetos/jupiter/alien_1.png").convert_alpha()
-          self.image=pygame.transform.scale(self.image,(80,80))#no esta en ingles el codigo,pygame group no me toma textura sino image 
+          x=randrange(x1,x2,3)
+          y=randrange(y1,y2,1)
+          self.image=pygame.image.load(textura).convert_alpha()
+          self.image=pygame.transform.scale(self.image,(escalax,escalay))#no esta en ingles el codigo,pygame group no me toma textura sino image 
           self.rect=self.image.get_rect()
-          self.rect.topleft=(x,y)
+          self.rect.center=(x,y)
      def update(self):
           self.rect.x+=2
 
-#crea 3 esparcidos por coordenadas random
-def lista_sprites(x1,x2,y1,y2,textura):
-     x=randint(x1,x2)
-     y=randint(y1,y2)   
-
-     alien_1=NPC(x,y,textura)
-     alien_2=NPC(x,y,textura)
-     alien_3=NPC(x,y,textura)
-
-     return alien_1,alien_2,alien_3
-
-
-     
-
-
-class Objeto:
-     def __init__(self,textura,x,y,escalax,escalay,texto,sonido):
-          self.textura=textura
-          self.x=x
-          self.y=y
-          self.escalax=escalax
-          self.escalay=escalay
-          self.texto=texto
-          self.sonido=sonido
           

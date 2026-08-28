@@ -14,7 +14,7 @@ mouse_pos=pygame.mouse.get_pos()
 textura_jugador=pygame.image.load("Alpha_Centauri/assets/imagenes/spritesviejos/camina_atras.PNG").convert_alpha()
 
 alien=pygame.image.load("Alpha_Centauri/assets/imagenes/objetos/jupiter/alien_1.png").convert_alpha()
-txt_alien=pygame.transform.scale(alien,(1000,8000))
+
 
 
 fondo=pygame.image.load("Alpha_Centauri/assets/imagenes/fondos/jupiter.png")
@@ -32,7 +32,7 @@ voz_gigantes=pygame.mixer.Sound("Alpha_Centauri/assets/sonidos/dialogojupiter.mp
 jugador=Jugador(textura_jugador,500,800,80,80)
 lista_npcs=pygame.sprite.Group()
 for i in range(4):
-     lista_npcs.add(NPC(500,800,500,800,"Alpha_Centauri/assets/imagenes/objetos/jupiter/alien_1.png"))
+     lista_npcs.add(NPC(100,900,100,900,"Alpha_Centauri/assets/imagenes/objetos/jupiter/alien_1.png",600,600))
 #FUNCIONES
 # def cinematica():
 #       pass
