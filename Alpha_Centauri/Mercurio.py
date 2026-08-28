@@ -38,17 +38,18 @@ for i in range(2):
      
 
 #FUNCIONES
-# def exploracion():
-      
-#       if jugador.hitbox.colliderect(alien_1.hitbox):
-#               voz_piedritas.play()
-#               display_texto(window,"Alien de piedra:\n *Sonidos de piedra*")
-#       elif jugador.hitbox.colliderect(alien_2.hitbox):
-#               voz_piedritas.play()
-#               display_texto(window,"")
+
+
+
       
 
 def main():
+    window.fill((255, 255, 255))
+    cambio_texto(window,fondo,fondo_rect,jugador.textura,jugador.hitbox)
+    lista_npcs.draw(window)
+    planeta_info(window,"info de mercurio \nblah blah blah","MERCURIO",(pygame.Color("azure3")))
+    boton=boton_chau(window,1150,655,(pygame.Color("seashell3")))
+    
     loop=True
     while loop:
         for event in pygame.event.get():
@@ -57,15 +58,17 @@ def main():
             elif event.type==pygame.KEYDOWN:
                   if event.key==pygame.K_ESCAPE:
                         loop=False
+            elif event.type==pygame.MOUSEBUTTONDOWN:
+                 if event.button==1:
+                      if boton.collidepoint(event.pos):
+                           print("click")
+                           cambio_texto(window,fondo,fondo_rect,jugador.textura,jugador.hitbox)
+                           lista_npcs.draw(window)
 
-        window.fill((255, 255, 255))
-        window.blit(fondo,fondo_rect)
-        window.blit(jugador.textura,jugador.hitbox)
 
         jugador.movimiento(jugador)
-        lista_npcs.draw(window)
-        planeta_info(window,"info de mercurio \nblah blah blah","Mercurio",(pygame.Color("azure3")))
-
+        
+        
         pygame.display.update()
 main()
 # import Jupiter

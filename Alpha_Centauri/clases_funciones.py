@@ -55,6 +55,7 @@ def display_texto(pan,texto):
 def planeta_info(pan,texto1,texto2,color):
     #caja de texto principal
     fuente=pygame.font.SysFont("Consolas",36,bold=True)
+    fuente_titulo=pygame.font.SysFont("twcen",60,bold=True)
     #primero la cajita del txto
     ancho_caja=600
     alto_caja=700
@@ -63,15 +64,28 @@ def planeta_info(pan,texto1,texto2,color):
     pygame.draw.rect(pan, AZUL_MARINO, caja_rect, border_radius=8)
     pygame.draw.rect(pan, TURQUESA, caja_rect, width=3, border_radius=8)
     #caja de texto del TITULO
-    titulo_caja=pygame.Rect(0,0,int(ancho_caja*0.10),int(alto_caja*0.10))
-    pygame.draw.rect(pan,BLANCO,titulo_caja,width=3,border_radius=10)
+    titulo_caja=pygame.Rect(0,0,(ancho_caja-50),int(alto_caja*0.15))
+    titulo_caja.center=(1100,112)
+    pygame.draw.rect(pan,color,titulo_caja,width=3,border_radius=20)
     #txto principal
-    txto=fuente.render(texto1,True,BLANCO)
+    txto=fuente.render(f"\n\n{texto1}",True,BLANCO)
     pan.blit(txto,(caja_rect.x+100,caja_rect.y+45))
     #texto titulo
-    txto2=fuente.render(texto2,True,color)
-    pan.blit(txto2,(titulo_caja.x+100,titulo_caja.y+45))
+    txto2=fuente_titulo.render(texto2,True,color)
+    pan.blit(txto2,(titulo_caja.x+130,titulo_caja.y+25))
     #boton de chau (en otra cajita + chiquita)
+    
+
+def boton_chau(pan,x,y,color):
+    fuente=pygame.font.SysFont("twcen",30,bold=True)
+    boton=pygame.Rect(0,0,(600-300),int(700*0.13)) 
+    boton.center=(x,y)
+    pygame.draw.rect(pan,color,boton,border_radius=10)
+    txto=fuente.render("CERRAR",True,BLANCO)
+    pan.blit(txto,(boton.x+100,boton.y+45))
+    return boton
+
+    
     
 
      
