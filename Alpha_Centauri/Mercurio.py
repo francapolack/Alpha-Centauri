@@ -44,14 +44,19 @@ for i in range(2):
       
 
 def main():
-    window.fill((255, 255, 255))
-    cambio_texto(window,fondo,fondo_rect,jugador.textura,jugador.hitbox)
-    lista_npcs.draw(window)
-    planeta_info(window,"info de mercurio \nblah blah blah","MERCURIO",(pygame.Color("azure3")))
-    boton=boton_chau(window,1150,655,(pygame.Color("seashell3")))
     
+    chau_display=False
     loop=True
     while loop:
+        window.fill((255,255,255))
+        window.blit(fondo,fondo_rect)                
+        window.blit(jugador.textura,jugador.hitbox)
+        jugador.movimiento(jugador)
+        lista_npcs.draw(window)
+
+        planeta_info(window,"info de mercurio \nblah blah blah","MERCURIO",(pygame.Color("azure3")))
+        boton=boton_chau(window,1150,655,(pygame.Color("seashell3")))
+
         for event in pygame.event.get():
             if event.type==pygame.QUIT:
                 loop=False
@@ -59,17 +64,18 @@ def main():
                   if event.key==pygame.K_ESCAPE:
                         loop=False
             elif event.type==pygame.MOUSEBUTTONDOWN:
-                 if event.button==1:
-                      if boton.collidepoint(event.pos):
-                           print("click")
-                           cambio_texto(window,fondo,fondo_rect,jugador.textura,jugador.hitbox)
-                           lista_npcs.draw(window)
+                  if event.button==1:
+                       if boton.collidepoint(event.pos):
+                            chau_display=True
 
+        if chau_display:
+            print("click")
+            cambio_texto(window,fondo,fondo_rect,jugador.textura,jugador.hitbox)
+            lista_npcs.draw(window)
+            jugador.movimiento(jugador)
 
-        jugador.movimiento(jugador)
-        
-        
         pygame.display.update()
+
 main()
 # import Jupiter
 # Jupiter.main()
