@@ -2,6 +2,7 @@
 import pygame
 from random import randint
 from clases_funciones import *
+from textos import jupiter
 pygame.init()
 pygame.mixer.init()
 
@@ -30,9 +31,7 @@ voz_gigantes=pygame.mixer.Sound("Alpha_Centauri/assets/sonidos/dialogojupiter.mp
 #OBJETOS
 
 jugador=Jugador(textura_jugador,500,800,80,80)
-lista_npcs=pygame.sprite.Group()
-for i in range(4):
-     lista_npcs.add(NPC(100,900,100,900,"Alpha_Centauri/assets/imagenes/objetos/jupiter/alien_1.png",600,600))
+
 #FUNCIONES
 # def cinematica():
 #       pass
@@ -56,22 +55,30 @@ for i in range(4):
 
 
 def main():
+    chau_display=False
     loop=True
     while loop:
+        window.fill((255,255,255))
+        window.blit(fondo,fondo_rect)                
+        window.blit(jugador.textura,jugador.hitbox)
+        jugador.movimiento(jugador)
+        planeta_info(window,jupiter,"JUPITER",(pygame.Color("pink1")),160,20,60,60)
+        boton=boton_chau(window,1100,655,(pygame.Color("pink1")),"CERRAR",90,35)
+
         for event in pygame.event.get():
             if event.type==pygame.QUIT:
                 loop=False
             elif event.type==pygame.KEYDOWN:
                   if event.key==pygame.K_ESCAPE:
                         loop=False
-
-        window.fill((255, 255, 255))
-        window.blit(fondo,fondo_rect)
-        window.blit(jugador.textura,jugador.hitbox)
+            elif event.type==pygame.MOUSEBUTTONDOWN:
+                  if event.button==1:
+                       if boton.collidepoint(event.pos):
+                            chau_display=True
         
-        jugador.movimiento(jugador)
-        lista_npcs.draw(window)
-        #exploracion()
+        if chau_display:
+            cambio_texto(window,fondo,fondo_rect,jugador.textura,jugador.hitbox)
+            jugador.movimiento(jugador)
 
         pygame.display.update()
 main()

@@ -33,7 +33,7 @@ def video(ruta,nombre):
               pygame.display.update()
          pygame.time.wait(16)
     vid.close()
-    pygame.quit()
+
 
 
 #DISPLAY DE TEXTO EN CAJA (O CAJA DE DIALOGO)
@@ -58,9 +58,9 @@ def display_texto(pan,texto,textura):
     pan.blit(txto,(caja_rect.x+100,caja_rect.y+45))
     
 #DISPLAY DE INFO AL SALIR DE LA NAVE
-def planeta_info(pan,texto1,texto2,color):
+def planeta_info(pan,texto1,texto2,color,septitulox,septituloy,septxtx,septxty):
     #caja de texto principal
-    fuente=pygame.font.SysFont("Consolas",36,bold=True)
+    fuente=pygame.font.SysFont("Consolas",25,bold=True)
     fuente_titulo=pygame.font.SysFont("twcen",60,bold=True)
     #primero la cajita del txto
     ancho_caja=600
@@ -75,48 +75,54 @@ def planeta_info(pan,texto1,texto2,color):
     pygame.draw.rect(pan,color,titulo_caja,width=3,border_radius=20)
     #txto principal
     txto=fuente.render(f"\n\n{texto1}",True,BLANCO)
-    pan.blit(txto,(caja_rect.x+100,caja_rect.y+45))
+    pan.blit(txto,(caja_rect.x+septxtx,caja_rect.y+septxty))
     #texto titulo
     txto2=fuente_titulo.render(texto2,True,color)
-    pan.blit(txto2,(titulo_caja.x+130,titulo_caja.y+25))
+    pan.blit(txto2,(titulo_caja.x+septitulox,titulo_caja.y+septituloy))
     #boton de chau (en otra cajita + chiquita)
 
 #BOTON UNIVERSAL DE CHAU
-def boton_chau(pan,x,y,color,texto):
+def boton_chau(pan,x,y,color,texto,separacionx,separaciony):
     fuente=pygame.font.SysFont("twcen",30,bold=True)
-    boton=pygame.Rect(0,0,(600-300),int(700*0.13)) 
+    boton=pygame.Rect(0,0,300,100) 
     boton.center=(x,y)
-    pygame.draw.rect(pan,color,boton,border_radius=10)
+    pygame.draw.rect(pan,color,boton,width=8,border_radius=8)
     txto=fuente.render(texto,True,BLANCO)
-    pan.blit(txto,(boton.x+100,boton.y+45))
+    pan.blit(txto,(boton.x+separacionx,boton.y+separaciony))
     return boton
 
 
 #DISPLAY DE 2 OPCIONES (sin terminar)
-def opciones(pan,f,frect,txt1,txt2):
-    pass
-    """
-     pygame.mouse.get_pos()
-     pan.blit(f,frect)
-     fuente=pygame.font.Font(None,36)
+def trivia_alien(pos_mouse,pan,pregunta,t1,t2,t3,correcta):
+    fuente=pygame.font.Font(None,36)
+    titulo_caja=pygame.Rect(0,0,600,500)
+    titulo_caja.center=(1100,112)
+    pygame.draw.rect(pan,NEGRO,titulo_caja,border_radius=8)
+    texto_pregunta=fuente.render(pregunta,True,BLANCO)
+    pregunta_rect=texto_pregunta.get_rect()
+    pan.blit(texto_pregunta,pregunta_rect)
+    rects=[
+              #opcion y su rect
+              pygame.Rect(220, 120, 200, 50),
+              pygame.Rect(220, 120, 200, 50),
+              pygame.Rect(220, 120, 200, 50),
+    ]
+    opciones=[t1,t2,t3]
+    opcion_correcta=correcta
+    seleccionada=None
+    for i,rect in enumerate(rects):
+         color=(100,200,100) if rect.collidepoint(pos_mouse) else (70,70,70)
+         pygame.draw.rect(pan,color,rect,border_radius=8)
+         txto=fuente.render(opciones[i],True,BLANCO)
+         txto_rect=txto.get_rect(center=rect.center)
+         pan.blit(txto,txto_rect)
+         if rect.collidepoint(pos_mouse):
+              seleccionada=opciones[i]
+              if seleccionada==opcion_correcta:
+                   print("bien")
 
-     globotxta=pygame.image.load("Alpha_Centauri/imagenes/objetos/general/globo.png")
-     globotxt_flip=pygame.transform.flip(globotxta, True, False)
+         
 
-    #opcion 1
-     globo1=globotxta
-     globo1_rect=globo1.get_rect()
-     if pygame.mouse.get_pressed()[0] and globo1_rect.collidepoint(mouse_pos):
-          
-     #txto1=fuente.render(txt1,True,NEGRO)
-     #pan.blit(globo1,txto1)
-
-
-
-    #opcion 2
-     #globo2=globotxt_flip
-     #globo2_rect=globo2.get_rect()
-    """
 #FILTRO OSCURO PARA CONVOS CON PERSONAJES
 def filtro(x,y,pan):
      filtro=pygame.Surface((x,y),pygame.SRCALPHA)

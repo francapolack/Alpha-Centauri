@@ -2,6 +2,7 @@
 import pygame
 from random import randint
 from clases_funciones import *
+from textos import mercurio, venus_preguntas
 pygame.init()
 pygame.mixer.init()
 
@@ -9,6 +10,7 @@ window = pygame.display.set_mode((0,0),pygame.FULLSCREEN)
 ancho,alto=window.get_size()
 fuente=pygame.font.SysFont("Consolas",15)
 reloj=pygame.time.Clock()
+mouse_pos=pygame.mouse.get_pos()
 
 #TEXTURAS
 textura_jugador=pygame.image.load("Alpha_Centauri/assets/imagenes/objetos/mercurio/rover.png").convert_alpha()
@@ -29,15 +31,16 @@ voz_piedritas=pygame.mixer.Sound("Alpha_Centauri/assets/sonidos/dialogopiedras.w
 
 jugador=Jugador(textura_jugador,600,800,400,300)
 
-#npcs que estan ahi nomas
-lista_npcs=pygame.sprite.Group()
-for i in range(4):
-     lista_npcs.add(NPC(700,1500,500,700,"Alpha_Centauri/assets/imagenes/objetos/mercurio/alien_1.png",100,100))
-for i in range(2):
-     lista_npcs.add(NPC(200,800,500,700,"Alpha_Centauri/assets/imagenes/objetos/mercurio/alien_1.png",100,100))
+#npcs que estan ahi nomas (reemplazar con obketos)
+# lista_npcs=pygame.sprite.Group()
+# for i in range(4):
+#      lista_npcs.add(NPC(700,1500,500,700,"Alpha_Centauri/assets/imagenes/objetos/mercurio/alien_1.png",100,100))
+# for i in range(2):
+#      lista_npcs.add(NPC(200,800,500,700,"Alpha_Centauri/assets/imagenes/objetos/mercurio/alien_1.png",100,100))
      
 #el npc de trivia
 trivia=TriviaNPC("Alpha_Centauri/assets/imagenes/objetos/mercurio/alien_1.png",500,500,100,100)
+test="pregunta"
 #FUNCIONES
 
 
@@ -49,16 +52,17 @@ def main():
     responder=False
     chau_display=False
     loop=True
-    video("Alpha_Centauri/assets/videos/intro.mp4","Intro")
+    #video("Alpha_Centauri/assets/videos/intro.mp4","Intro")
+
     while loop:
         window.fill((255,255,255))
         window.blit(fondo,fondo_rect)                
         window.blit(jugador.textura,jugador.hitbox)
         jugador.movimiento(jugador)
-        lista_npcs.draw(window)
+        #lista_npcs.draw(window)
 
-        planeta_info(window,"Mercurio es el planeta más pequeño de nuestro \n sistema solar y el más cercano al Sol \nA pesar de su proximidad al Sol, Mercurio no es el planeta más caliente de nuestro sistema solar; ese título le corresponde a la cercana Venus, gracias a su densa atmósfera. \nSin embargo, Mercurio es el planeta más rápido, \norbitando alrededor del Sol cada 88 días terrestres","MERCURIO",(pygame.Color("azure3")))
-        boton=boton_chau(window,1150,655,(pygame.Color("seashell3")),"CERRAR")
+        planeta_info(window,mercurio,"MERCURIO",(pygame.Color("azure3")),130,25,55,60)
+        boton=boton_chau(window,1100,655,(pygame.Color("lightslateblue")),"CERRAR",90,35)
 
         for event in pygame.event.get():
             if event.type==pygame.QUIT:
@@ -77,17 +81,19 @@ def main():
 
         if chau_display:
             cambio_texto(window,fondo,fondo_rect,jugador.textura,jugador.hitbox)
-            lista_npcs.draw(window)
+            #lista_npcs.draw(window)
             jugador.movimiento(jugador)
             window.blit(trivia.textura,trivia.rect)
             if hablando:
                     filtro(ancho,alto,window)
                     trivia.texto(window,"Bienvenido a Mercurio","Alpha_Centauri/assets/imagenes/objetos/mercurio/alien_convo.png")
-                    resp=boton_chau(window,1000,600,pygame.Color("lightblue1"),"Responder")
-                    # if responder:
-                    #      display2opciones()
-                 
-        
+                    resp=boton_chau(window,1100,600,pygame.Color("lightslateblue"),"Responder",70,30)
+                    if responder:
+                          cambio_texto(window,fondo,fondo_rect,jugador.textura,jugador.hitbox)
+                          jugador.movimiento(jugador)
+                          window.blit(trivia.textura,trivia.rect)
+                          trivia_alien(mouse_pos,window,"test","uno","dos","tres",2)
+
 
         pygame.display.update()
 
