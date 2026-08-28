@@ -13,8 +13,9 @@ mouse_pos=pygame.mouse.get_pos()
 #TEXTURAS
 textura_jugador=pygame.image.load("Alpha_Centauri/assets/imagenes/spritesviejos/camina_atras.PNG").convert_alpha()
 
-piedritas_textura=pygame.image.load("Alpha_Centauri/assets/imagenes/objetos/jupiter/alien_1.png")
-piedritas_izq_textura=pygame.transform.flip(piedritas_textura, True, False)
+alien=pygame.image.load("Alpha_Centauri/assets/imagenes/objetos/jupiter/alien_1.png").convert_alpha()
+txt_alien=pygame.transform.scale(alien,(1000,8000))
+
 
 fondo=pygame.image.load("Alpha_Centauri/assets/imagenes/fondos/jupiter.png")
 fondo_rect=fondo.get_rect()
@@ -29,29 +30,29 @@ voz_gigantes=pygame.mixer.Sound("Alpha_Centauri/assets/sonidos/dialogojupiter.mp
 #OBJETOS
 
 jugador=Jugador(textura_jugador,500,800,80,80)
-
-alien_1=NPC(piedritas_textura,500,500,500,500)
-
+lista_npcs=pygame.sprite.Group()
+for i in range(4):
+     lista_npcs.add(NPC(500,800,500,800,"Alpha_Centauri/assets/imagenes/objetos/jupiter/alien_1.png"))
 #FUNCIONES
-def cinematica():
-      pass
-def exploracion(): 
-      window.blit(alien_1.textura,alien_1.hitbox)
-      #display_texto(window,600,600,"RENEE:¡¿Qué es eso?!")         
-      if alien_1.hitbox.x<1000:
-        alien_1.hitbox.x+=7
-      else:
-        alien_1.hitbox.x-=2
-        alien_1.estado="IZQUIERDA" 
+# def cinematica():
+#       pass
+# def exploracion(): 
+#       window.blit(alien_1.textura,alien_1.hitbox)
+#       #display_texto(window,600,600,"RENEE:¡¿Qué es eso?!")         
+#       if alien_1.hitbox.x<1000:
+#         alien_1.hitbox.x+=7
+#       else:
+#         alien_1.hitbox.x-=2
+#         alien_1.estado="IZQUIERDA" 
 
-      if alien_1.estado=="IZQUIERDA":
-        cambio_texto(window,fondo,fondo_rect,jugador.textura,jugador.hitbox)
-        window.blit(alien_1.textura,alien_1.hitbox)
+#       if alien_1.estado=="IZQUIERDA":
+#         cambio_texto(window,fondo,fondo_rect,jugador.textura,jugador.hitbox)
+#         window.blit(alien_1.textura,alien_1.hitbox)
 
-        display_texto(window,600,600,"MARK:Ve a ayudarlo!")
+#         display_texto(window,600,600,"MARK:Ve a ayudarlo!")
 
-        cambio_texto(window,fondo,fondo_rect,jugador.textura,jugador.hitbox)
-        window.blit(alien_1.textura,alien_1.hitbox)
+#         cambio_texto(window,fondo,fondo_rect,jugador.textura,jugador.hitbox)
+#         window.blit(alien_1.textura,alien_1.hitbox)
 
 
 def main():
@@ -69,8 +70,8 @@ def main():
         window.blit(jugador.textura,jugador.hitbox)
         
         jugador.movimiento(jugador)
-
-        exploracion()
+        lista_npcs.draw(window)
+        #exploracion()
 
         pygame.display.update()
 main()

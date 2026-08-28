@@ -2,6 +2,7 @@ import pygame
 import cv2,time
 from pyvidplayer2 import Video
 import os
+from random import randint
 #COLORES
 NEGRO=(0,0,0)
 BLANCO=(240,240,255)
@@ -15,8 +16,8 @@ AZUL_MARINO=(20, 20, 35)
     
 #VIDEOS
 
-#dejar que python reconozca a ffmpeg (NO SE PORQUE NO LO RECONOCE NORMALMENTE)
 FFMPEG_RUTA=r"C:/ffmpeg/bin"
+#os environ= como un diccionario de las variables de entorno (donde estan como las librerias y cosas asi) y os.pathsep=(buscador de carpetas)
 os.environ["PATH"]=FFMPEG_RUTA+os.pathsep+os.environ["PATH"]
 
 #funcion de video
@@ -107,16 +108,40 @@ class Jugador:
                 jugador.hitbox.move_ip(0,jugador.VELOCIDAD)
 
 
+#medio deprecado....
+# class NPC:
+#     def __init__(self,textura,x,y,escalax,escalay):
+#         self.estado="DERECHA"
+#         self.textura_inicial=textura
+#         self.textura=pygame.transform.scale(textura,(escalax,escalay))
+#         self.hitbox=self.textura.get_rect()
+#         self.hitbox.center=(x,y)
+       
+class NPC(pygame.sprite.Sprite):
+     def __init__(self,x1,x2,y1,y2,textura):
+          super().__init__()
+          x=randint(x1,x2)
+          y=randint(y1,y2)
+          self.image=pygame.image.load("Alpha_Centauri/assets/imagenes/objetos/jupiter/alien_1.png").convert_alpha()
+          self.image=pygame.transform.scale(self.image,(80,80))#no esta en ingles el codigo,pygame group no me toma textura sino image 
+          self.rect=self.image.get_rect()
+          self.rect.topleft=(x,y)
+     def update(self):
+          self.rect.x+=2
 
-class NPC:
-    def __init__(self,textura,x,y,escalax,escalay):
-        self.estado="DERECHA"
-        self.textura_inicial=textura
-        self.textura=pygame.transform.scale(textura,(escalax,escalay))
-        self.hitbox=self.textura.get_rect()
-        self.hitbox.center=(x,y)
-        if self.estado=="IZQUIERDA":
-            self.textura_inicial=pygame.transform.flip(textura, True, False)
+#crea 3 esparcidos por coordenadas random
+def lista_sprites(x1,x2,y1,y2,textura):
+     x=randint(x1,x2)
+     y=randint(y1,y2)   
+
+     alien_1=NPC(x,y,textura)
+     alien_2=NPC(x,y,textura)
+     alien_3=NPC(x,y,textura)
+
+     return alien_1,alien_2,alien_3
+
+
+     
 
 
 class Objeto:
