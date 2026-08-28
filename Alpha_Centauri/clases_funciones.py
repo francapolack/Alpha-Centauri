@@ -76,12 +76,12 @@ def planeta_info(pan,texto1,texto2,color):
     #boton de chau (en otra cajita + chiquita)
     
 
-def boton_chau(pan,x,y,color):
+def boton_chau(pan,x,y,color,texto):
     fuente=pygame.font.SysFont("twcen",30,bold=True)
     boton=pygame.Rect(0,0,(600-300),int(700*0.13)) 
     boton.center=(x,y)
     pygame.draw.rect(pan,color,boton,border_radius=10)
-    txto=fuente.render("CERRAR",True,BLANCO)
+    txto=fuente.render(texto,True,BLANCO)
     pan.blit(txto,(boton.x+100,boton.y+45))
     return boton
 
@@ -125,9 +125,6 @@ def cambio_texto(pan,f,frect,j,jrect):
 
 
 
-
-
-
 #CLASES
 class Jugador:
     VELOCIDAD=9
@@ -149,16 +146,18 @@ class Jugador:
         elif tecla[pygame.K_DOWN] or tecla[pygame.K_s]:
                 jugador.hitbox.move_ip(0,jugador.VELOCIDAD)
 
-
-#medio deprecado....
 class TriviaNPC:
      def __init__(self,textura,x,y,escalax,escalay):
-         self.estado="DERECHA"
-         self.textura_inicial=textura
-         self.textura=pygame.transform.scale(textura,(escalax,escalay))
-         self.hitbox=self.textura.get_rect()
-         self.hitbox.center=(x,y)
-       
+          self.textura=pygame.image.load(textura).convert_alpha()
+          self.textura=pygame.transform.scale(self.textura,(escalax,escalay))
+          self.rect=self.textura.get_rect()
+          self.rect.center=(x,y)
+     def texto(self,pan,texto):
+          display_texto(pan,texto)
+          boton_chau(pan,500,500,pygame.Color("skyblue1"),"Responder")
+          
+
+
 class NPC(pygame.sprite.Sprite):
      def __init__(self,x1,x2,y1,y2,textura,escalax,escalay):
           super().__init__()

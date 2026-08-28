@@ -67,12 +67,15 @@ def main():
                   if event.button==1:
                        if boton.collidepoint(event.pos):
                             chau_display=True
+                       elif trivia.collidepoint(event.pos):
+                            responder=True
 
         if chau_display:
-            print("click")
             cambio_texto(window,fondo,fondo_rect,jugador.textura,jugador.hitbox)
             lista_npcs.draw(window)
             jugador.movimiento(jugador)
+
+        
 
         pygame.display.update()
 
