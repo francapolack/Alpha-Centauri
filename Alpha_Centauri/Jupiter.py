@@ -62,7 +62,7 @@ def main():
         window.blit(fondo,fondo_rect)                
         window.blit(jugador.textura,jugador.hitbox)
         jugador.movimiento(jugador)
-        planeta_info(window,jupiter,"JUPITER",(pygame.Color("pink1")),160,20,60,60)
+        planeta_info(window,jupiter,"JUPITER",(pygame.Color("pink1")),960,80,60,60)
         boton=boton_chau(window,1100,655,(pygame.Color("pink1")),"CERRAR",90,35)
 
         for event in pygame.event.get():

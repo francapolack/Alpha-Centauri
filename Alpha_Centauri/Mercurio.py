@@ -61,7 +61,7 @@ def main():
         jugador.movimiento(jugador)
         #lista_npcs.draw(window)
 
-        planeta_info(window,mercurio,"MERCURIO",(pygame.Color("azure3")),130,25,55,60)
+        planeta_info(window,mercurio,"MERCURIO",(pygame.Color("azure3")),960,80,55,60)
         boton=boton_chau(window,1100,655,(pygame.Color("lightslateblue")),"CERRAR",90,35)
 
         for event in pygame.event.get():

@@ -12,6 +12,38 @@ AZUL_MARINO=(20, 20, 35)
 #OTROS
 
 #FUNCIONES
+def aplicar_filtro_oscuro(superficie, opacidad_personaje):
+    if superficie is None:
+        return None
+    img_oscura = superficie.copy()
+    filtro = pygame.Surface(img_oscura.get_size(), pygame.SRCALPHA)
+    filtro.fill((0, 0, 0, 120)) 
+    img_oscura.blit(filtro, (0, 0), special_flags=pygame.BLEND_RGBA_SUB)
+    img_oscura.set_alpha(opacidad_personaje)
+    return img_oscura
+
+def puede_moverse(x, y, ancho, alto, superficie_colision, escala):
+    if superficie_colision is None:
+        return True  # Si no hay imagen cargada, se mueve libremente por seguridad
+    
+    # Puntos estratégicos del hitbox del astronauta (pies y centro)
+    puntos_chequeo = [
+        (x + 8, y + alto - 8),                  # Pie izquierdo
+        (x + ancho - 8, y + alto - 8),          # Pie derecho
+        (x + ancho // 2, y + alto - 8)          # Centro inferior
+    ]
+    
+    for px, py in puntos_chequeo:
+        # Convertir coordenadas del mundo a coordenadas de la imagen de colisión original
+        img_x = int(px / escala)
+        img_y = int(py / escala)
+        
+        if 0 <= img_x < superficie_colision.get_width() and 0 <= img_y < superficie_colision.get_height():
+            color = superficie_colision.get_at((img_x, img_y))
+            # Si el píxel NO es completamente transparente (es decir, pintaste una pared), choca
+            if color[3] > 10:
+                return False
+    return True
 
 
     
@@ -70,15 +102,15 @@ def planeta_info(pan,texto1,texto2,color,septitulox,septituloy,septxtx,septxty):
     pygame.draw.rect(pan, AZUL_MARINO, caja_rect, border_radius=8)
     pygame.draw.rect(pan, TURQUESA, caja_rect, width=3, border_radius=8)
     #caja de texto del TITULO
-    titulo_caja=pygame.Rect(0,0,(ancho_caja-50),int(alto_caja*0.15))
-    titulo_caja.center=(1100,112)
-    pygame.draw.rect(pan,color,titulo_caja,width=3,border_radius=20)
+    # titulo_caja=pygame.Rect(0,0,(ancho_caja-50),int(alto_caja*0.15))
+    # titulo_caja.center=(1100,112)
+    # pygame.draw.rect(pan,color,titulo_caja,width=3,border_radius=20)
     #txto principal
     txto=fuente.render(f"\n\n{texto1}",True,BLANCO)
     pan.blit(txto,(caja_rect.x+septxtx,caja_rect.y+septxty))
     #texto titulo
     txto2=fuente_titulo.render(texto2,True,color)
-    pan.blit(txto2,(titulo_caja.x+septitulox,titulo_caja.y+septituloy))
+    pan.blit(txto2,(septitulox,septituloy))
     #boton de chau (en otra cajita + chiquita)
 
 #BOTON UNIVERSAL DE CHAU
@@ -96,17 +128,24 @@ def boton_chau(pan,x,y,color,texto,separacionx,separaciony):
 def trivia_alien(pos_mouse,pan,pregunta,t1,t2,t3,correcta):
     fuente=pygame.font.Font(None,36)
     titulo_caja=pygame.Rect(0,0,600,500)
-    titulo_caja.center=(1100,112)
+    titulo_caja.center=(700,200)
     pygame.draw.rect(pan,NEGRO,titulo_caja,border_radius=8)
     texto_pregunta=fuente.render(pregunta,True,BLANCO)
     pregunta_rect=texto_pregunta.get_rect()
     pan.blit(texto_pregunta,pregunta_rect)
-    rects=[
-              #opcion y su rect
-              pygame.Rect(220, 120, 200, 50),
-              pygame.Rect(220, 120, 200, 50),
-              pygame.Rect(220, 120, 200, 50),
-    ]
+
+    rect1=pygame.Rect(220, 120, 100, 50)
+    rect1.center=(700,300)
+    rect2=pygame.Rect(200, 120, 200, 50)
+    rect2.center=(700,400)
+    rect3=pygame.Rect(280, 120, 300, 50)
+    rect3.center=(700,500)
+    
+    rects=[]
+    rects.append(rect1)
+    rects.append(rect2)
+    rects.append(rect3)
+
     opciones=[t1,t2,t3]
     opcion_correcta=correcta
     seleccionada=None

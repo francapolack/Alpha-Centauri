@@ -4,43 +4,11 @@ import os
 import sys
 import random
 from pyvidplayer2 import Video 
-
+from clases_funciones import *
 from config import *
 import assets as modulo_assets
 from venus import NivelVenus
 
-def aplicar_filtro_oscuro(superficie, opacidad_personaje):
-    if superficie is None:
-        return None
-    img_oscura = superficie.copy()
-    filtro = pygame.Surface(img_oscura.get_size(), pygame.SRCALPHA)
-    filtro.fill((0, 0, 0, 120)) 
-    img_oscura.blit(filtro, (0, 0), special_flags=pygame.BLEND_RGBA_SUB)
-    img_oscura.set_alpha(opacidad_personaje)
-    return img_oscura
-
-def puede_moverse(x, y, ancho, alto, superficie_colision, escala):
-    if superficie_colision is None:
-        return True  # Si no hay imagen cargada, se mueve libremente por seguridad
-    
-    # Puntos estratégicos del hitbox del astronauta (pies y centro)
-    puntos_chequeo = [
-        (x + 8, y + alto - 8),                  # Pie izquierdo
-        (x + ancho - 8, y + alto - 8),          # Pie derecho
-        (x + ancho // 2, y + alto - 8)          # Centro inferior
-    ]
-    
-    for px, py in puntos_chequeo:
-        # Convertir coordenadas del mundo a coordenadas de la imagen de colisión original
-        img_x = int(px / escala)
-        img_y = int(py / escala)
-        
-        if 0 <= img_x < superficie_colision.get_width() and 0 <= img_y < superficie_colision.get_height():
-            color = superficie_colision.get_at((img_x, img_y))
-            # Si el píxel NO es completamente transparente (es decir, pintaste una pared), choca
-            if color[3] > 10:
-                return False
-    return True
 
 def main():
     pygame.init()
